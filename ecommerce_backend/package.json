@@ -1,0 +1,23 @@
+{
+  "name": "ecommerce_backend",
+  "version": "1.0.0",
+  "description": "this is backend part of my ecommerce flipkart clone project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keyword": [
+    "ecommerce",
+    "mern",
+    "Project",
+    "backend",
+    "api"
+  ],
+  "author": "Tareq Monower",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "mongoose": "^7.0.4"
+  }
+}
