@@ -16,12 +16,12 @@ mongoose.connect(
   `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.3a3gnjl.mongodb.net/${process.env.DB_DATABASE}?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   }
 ).then(() => {
   console.log('Database Connected');
-}).catch(() => {
-    console.log('Database Connection Failed')
+}).catch((err) => {
+    console.log(err)
 });
 
 app.use(bodyParser.json()); 
