@@ -10,7 +10,8 @@ router.get('/signin',(req,res) => {
 router.post('/signup',(req,res) => {
     
    User.findOne({ email: req.body.email })
-   .exec((error,user) => {
+   .then((user) => {
+    
     if(user ) return res.status(400).json({
        message: 'User already registered'
     });
@@ -39,12 +40,14 @@ router.post('/signup',(req,res) => {
     
     if(data){
         return res.status(201).json({
-            user: data
+        message: 'user created successfully!'
         })
     }
 
    });
 
+   }).catch((error) => {
+    console.log(error)
    })
 
 })
