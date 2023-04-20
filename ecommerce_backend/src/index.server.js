@@ -20,8 +20,8 @@ mongoose.connect(
   }
 ).then(() => {
   console.log('Database Connected');
-}).catch(() => {
-    console.log('Database Connection Failed')
+}).catch((err) => {
+    console.log(err)
 });
 
 app.use(bodyParser.json()); 
