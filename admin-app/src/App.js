@@ -1,13 +1,15 @@
 import React from 'react'
 import './App.css';
-import {Jumbotron} from 'react-bootstrap'
+
 
 function App() {
   return (
     <div className="App">
-      <Jumbotron>
-        <h1>Admin dashboard</h1>
-      </Jumbotron>
+      <div class="container-fluid bg-light text-dark p-5">
+      <div class="container bg-light p-5">
+      <h1 class="display-4 fw-bold">Welcome to Admin Dashboard</h1>
+      </div>
+    </div>
     </div>
   );
 }
