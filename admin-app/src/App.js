@@ -1,13 +1,13 @@
 import React from 'react'
 import './App.css';
-import {ToastHeader} from 'react-bootstrap'
+import {Jumbotron} from 'react-bootstrap'
 
 function App() {
   return (
     <div className="App">
-      <ToastHeader>
-        Admin dashboard
-      </ToastHeader>
+      <Jumbotron>
+        <h1>Admin dashboard</h1>
+      </Jumbotron>
     </div>
   );
 }
