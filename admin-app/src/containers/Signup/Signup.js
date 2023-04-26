@@ -1,5 +1,10 @@
 import React from "react";
+import Layout from "../../components/Layout/Layout";
 
 export default function Signup() {
-  return <div>Signup</div>;
+  return (
+    <Layout>
+      Signup
+    </Layout>
+  );
 }
