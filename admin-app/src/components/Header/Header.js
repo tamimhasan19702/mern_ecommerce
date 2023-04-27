@@ -8,8 +8,9 @@ export default function Header() {
       <Container>
        
         <Link className="navbar-brand" to="/">Admin Dashboard</Link>
-
-          
+         
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
           <Nav>
             <li className="nav-item">
                <NavLink to="signin" className="nav-link">Signin</NavLink>
@@ -18,6 +19,7 @@ export default function Header() {
                <NavLink to="signup" className="nav-link">Signup</NavLink>
             </li>
           </Nav>
+          </Navbar.Collapse>
 
       </Container>
     </Navbar>
