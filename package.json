@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "jsonwebtoken": "^9.0.0",
-    "slugify": "^1.6.6"
+    "jsonwebtoken": "^9.0.0"
   }
 }

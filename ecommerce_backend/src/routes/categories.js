@@ -3,7 +3,7 @@
 const express = require("express");
 const router = express.Router();
 const Category = require("../models/categories");
-const slugify = requrie("slugify");
+const slugify = require("slugify");
 
 router.post("/category/create", (req, res) => {
   const categoryObj = {
