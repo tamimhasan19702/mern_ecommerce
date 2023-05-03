@@ -6,10 +6,10 @@ const slugify = require("slugify");
 function createCategories(categories, parentId = null) {
   const categoryList = [];
   let category;
-  if (parentId === null) {
-    category = categories.filter((cat) => cat.parentId === undefined);
+  if (parentId == null) {
+    category = categories.filter((cat) => cat.parentId == undefined);
   } else {
-    category = categories.filter((cat) => cat.parentId === parentId);
+    category = categories.filter((cat) => cat.parentId == parentId);
   }
 
   for (let cate of category) {
@@ -29,7 +29,7 @@ function createCategories(categories, parentId = null) {
 exports.addCategory = (req, res) => {
   const categoryObj = {
     name: req.body.name,
-    slug: slugify(req.body.name),
+    slug: `slugify(req.body.name)`,
     createdBy: req.user._id, 
   };
 
