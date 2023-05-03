@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 //routes
 const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin/auth");
-const categoryRoutes = require('./routes/categories')
+const categoryRoutes = require('./routes/category')
 
 env.config();
 
