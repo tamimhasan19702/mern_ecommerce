@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema(
     ],
     reviews: [
         {
-            userId: mongoose.Schema.Types.ObjectId, ref: 'User',
+            userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
             review: String
         }
     ],
@@ -41,4 +41,4 @@ const productSchema = new mongoose.Schema(
     
 },{ timestamps: true });
 
-module.exports = mongoose.model("Products", productSchema);
+module.exports = mongoose.model("Product", productSchema);
