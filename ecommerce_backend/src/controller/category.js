@@ -26,7 +26,9 @@ function createCategories(categories, parentId = null) {
   return categoryList;
 }
 
+//add category
 exports.addCategory = (req, res) => {
+
   const categoryObj = {
     name: req.body.name,
     slug: `slugify(req.body.name)`,
@@ -47,8 +49,11 @@ exports.addCategory = (req, res) => {
   });
 };
 
+
+//getCategories
 exports.getCategories = (req, res) => {
-  Category.find({}).exec((error, categories) => {
+  Category.find({})
+  .exec((error, categories) => {
     if (error) return res.status(400).json({ error });
 
     if (categories) {
