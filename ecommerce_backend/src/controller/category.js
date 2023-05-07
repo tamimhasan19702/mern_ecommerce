@@ -2,6 +2,7 @@
 
 const Category = require("../models/category");
 const slugify = require("slugify");
+const shortid = require("shortid");
 
 function createCategories(categories, parentId = null) {
   const categoryList = [];
@@ -29,9 +30,13 @@ function createCategories(categories, parentId = null) {
 exports.addCategory = (req, res) => {
   const categoryObj = {
     name: req.body.name,
-    slug: `slugify(req.body.name)`,
-    createdBy: req.user._id, 
+    slug: `${slugify(req.body.name)}-${shortid.generate()}`,
+    createdBy: req.user._id,
   };
+
+  if (req.file) {
+    categoryObj.categoryImage = "/public/" + req.file.filename;
+  }
 
   if (req.body.parentId) {
     categoryObj.parentId = req.body.parentId;
@@ -40,7 +45,6 @@ exports.addCategory = (req, res) => {
   const cat = new Category(categoryObj);
   cat.save((error, category) => {
     if (error) return res.status(400).json({ error });
-
     if (category) {
       return res.status(201).json({ category });
     }
@@ -50,10 +54,8 @@ exports.addCategory = (req, res) => {
 exports.getCategories = (req, res) => {
   Category.find({}).exec((error, categories) => {
     if (error) return res.status(400).json({ error });
-
     if (categories) {
       const categoryList = createCategories(categories);
-
       res.status(200).json({ categoryList });
     }
   });
