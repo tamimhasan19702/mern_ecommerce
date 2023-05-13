@@ -28,6 +28,8 @@ mongoose
     console.log("Database Connected");
   });
 
+mongoose.set('useFindAndModify', false);
+
 app.use(express.json());
 app.use("/api", authRoutes);
 app.use("/api", adminRoutes);
