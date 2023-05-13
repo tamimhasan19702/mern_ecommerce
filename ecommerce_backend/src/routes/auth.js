@@ -7,5 +7,4 @@ router.post('/signup', validateSignUpRequest ,isRequestValidated,signup);
 router.post('/signin',validateSignInRequest ,isRequestValidated,signin);
 
 
-
 module.exports = router;
