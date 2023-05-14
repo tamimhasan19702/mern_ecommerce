@@ -17,7 +17,7 @@ exports.addItemToCart = (req, res) => {
           },
           {
             "$set": {
-              "cartItems": {
+              "cartItems.$": {
                 ...req.body.cartItems,
                 quantity: item.quantity + req.body.cartItems.quantity
               }
