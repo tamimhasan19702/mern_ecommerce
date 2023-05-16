@@ -28,14 +28,18 @@ function createCategories(categories, parentId = null) {
 }
 
 exports.addCategory = (req, res) => {
+   
   const categoryObj = {
     name: req.body.name,
-    slug: `${slugify(req.body.name)}-${shortid.generate()}`,
-    createdBy: req.user._id,
+    slug: `${slugify(req.body.name)}-${shortid.generate()}`
   };
 
+  if(req.file){
+    categoryObj.categoryImage = 'public/' + req.file.filename;
+   }
+
   if (req.file) {
-    categoryObj.categoryImage = "/public/" + req.file.filename;
+    categoryObj.categoryImage = process.env.API +"/public/" + req.file.filename;
   }
 
   if (req.body.parentId) {
