@@ -5,8 +5,12 @@ import Layout from "../../components/Layout/Layout";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import Input from "../../components/Ui/input/Input";
 import { login } from "../../actions";
+import {useDispatch} from 'react-redux';
+
 
 export default function Signin() {
+
+  const dispatch = useDispatch()
 
    const userLogin = (e) => {
     e.preventDefault()
@@ -14,7 +18,7 @@ export default function Signin() {
       email: 'User@gmail.com',
       password: '1234567890'
     }
-    login(user)
+    dispatch(login(user))
    }
 
 
