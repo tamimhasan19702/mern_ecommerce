@@ -8,7 +8,8 @@ import { login } from "../../actions";
 
 export default function Signin() {
 
-   const userLogin = () => {
+   const userLogin = (e) => {
+    e.preventDefault()
     const user = {
       email: 'User@gmail.com',
       password: '1234567890'
