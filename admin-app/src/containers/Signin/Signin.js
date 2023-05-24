@@ -1,6 +1,6 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import Input from "../../components/Ui/input/Input";
@@ -8,8 +8,12 @@ import { login } from "../../actions";
 import {useDispatch} from 'react-redux';
 
 
-export default function Signin() {
+export default function Signin(props) {
 
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const [error,setError] = useState('');
+  
   const dispatch = useDispatch()
 
    const userLogin = (e) => {
