@@ -1,9 +1,10 @@
-import axios from "axios"
-import axiosIntance from "../helpers/axios"
+import axios from "../helpers/axios"
 import { authConstants } from "./constants"
 
 export const login = (user) => {
+   
     console.log(user)
+    
     return async (dispatch) => {
 
         const res = await axios.post(`/admin/signin`,{

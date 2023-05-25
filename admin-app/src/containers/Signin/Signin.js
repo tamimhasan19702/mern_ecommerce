@@ -19,8 +19,8 @@ export default function Signin(props) {
    const userLogin = (e) => {
     e.preventDefault()
     const user = {
-      email: 'User@gmail.com',
-      password: '1234567890'
+      email,
+      password
     }
     dispatch(login(user))
    }
@@ -35,17 +35,17 @@ export default function Signin(props) {
               <Input
                 label="Email"
                 placeholder="Email"
-                value=""
+                value={email}
                 type="email"
-                onChange={() => {}}
+                onChange={(e) => setEmail(e.target.value)}
               />
 
               <Input
                 label="Password"
-                placeholder="Password"
+                placeholder={password}
                 value=""
                 type="password"
-                onChange={() => {}}
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <Button variant="primary" type="submit">

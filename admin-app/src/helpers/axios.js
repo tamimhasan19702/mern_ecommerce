@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { api } from '../store/urlConfig';
+import { api } from '../urlConfig';
 
 const axiosIntance = axios.create({
     baseURL: api,
-    headers: {
-        'Authorization': ''
-    }
+    // headers: {
+    //     'Authorization': ''
+    // }
 }); 
 
 export default axiosIntance;
