@@ -10,7 +10,7 @@ export default function Input(props) {
                 value={props.value}
                 onChange={props.change} />
                 <Form.Text className="text-muted">
-                    {props.errorMessage}
+                {props.errorMessage}
                 </Form.Text>
         </Form.Group>
   );

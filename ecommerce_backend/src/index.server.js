@@ -4,6 +4,8 @@ const express = require("express");
 const env = require("dotenv");
 const app = express();
 const mongoose = require("mongoose");
+const path = require('path');
+const cors = require('cors')
 
 //routes
 const authRoutes = require("./routes/auth");
@@ -11,7 +13,6 @@ const adminRoutes = require("./routes/admin/auth");
 const categoryRoutes = require('./routes/category');
 const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart')
-const path = require('path');
 
 env.config();
 
@@ -31,6 +32,7 @@ mongoose
 
 mongoose.set('useFindAndModify', false);
 
+app.use(cors())
 app.use(express.json());
 app.use('/public',express.static(path.join(__dirname, 'uploads')));
 app.use("/api", authRoutes);
