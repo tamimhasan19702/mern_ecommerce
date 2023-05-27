@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { Form,Button,Container,Row,Col } from "react-bootstrap";
 import Input from "../../components/Ui/input/Input";
 
 export default function Signup() {
+
+  const [name,setName] = useState('halum')
+
   return (
     <Layout>
       <Container>
@@ -18,7 +21,7 @@ export default function Signup() {
                   placeholder="First name"
                   value=""
                   type="text"
-                  onChange={() => {}}/>
+                  onChange={() => {setName('montu')}}/>
               </Col>
               <Col md={6}>
               <Input 
