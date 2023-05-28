@@ -3,22 +3,29 @@ import Layout from "../../components/Layout/Layout";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import Input from "../../components/Ui/input/Input";
 import { login } from "../../actions";
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const Signin = (props) => {
 
-  const [email,setEmail] = useState('');
-  const [password,setPassword] = useState('');
-  const [error,setError] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const userLogin = (e) => {
-    e.preventDefault()
+  const userLogin = async (e) => {
+    e.preventDefault();
 
-    const user = { email,password }
-
-    dispatch(login(user))
+    try {
+      const user = {
+        email: email,
+        password: password
+      };
+  
+      await dispatch(login(user));
+    } catch (error) {
+      setError(error.message);
+    }
    }
 
   return (
@@ -32,14 +39,14 @@ const Signin = (props) => {
                             type="email"
                             label="Email"
                             placeholder="Email"
-                            value={email || ''}
+                            value={email}
                         />
 
                         <Input 
                             onChange={(e) => setPassword(e.target.value)}
                             label="Password"
                             placeholder="Password"
-                            value={password || ''}
+                            value={password}
                             type="password"
                         />
                         <Button variant="primary" type="submit">
@@ -48,6 +55,7 @@ const Signin = (props) => {
                     </Form>
                 </Col>
             </Row>
+            {error && <p>{error}</p>}
         </Container>
     </Layout>
   );
