@@ -30,7 +30,8 @@ export default (state = initState, action) => {
         ...state,
         user: action.payload.user,
         token: action.payload.token,
-        authenticate: true
+        authenticate: true,
+        authenticating: false
       }
       break;
 
