@@ -21,14 +21,16 @@ export const login = (user) => {
                     token,user
                 }
             });
+        }else{
+            if(res.status === 400){
+                dispatch({
+                    type: authConstants.LOGIN_FAILURE,
+                    payload: { error: res.data.error }
+                });
+            }
         }
 
 
-        dispatch({
-            type: authConstants.LOGIN_REQUEST,
-            payload: {
-                ...user
-            }
-        })
+        
     }
 }
