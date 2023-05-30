@@ -3,30 +3,36 @@ import Layout from "../../components/Layout/Layout";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import Input from "../../components/Ui/input/Input";
 import { login } from "../../actions";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from "react-router-dom";
 
-const Signin = (props) => {
+function Signin (props) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const auth = useSelector(state => state.auth)
+
 
   const dispatch = useDispatch();
 
   const userLogin = async (e) => {
     e.preventDefault();
 
-    try {
+
       const user = {
         email: email,
         password: password
       };
   
-      await dispatch(login(user));
-    } catch (error) {
-      setError(error.message);
-    }
+       dispatch(login(user));
+
    }
+
+  if(auth.authenticate){
+    return <Redirect to={'/'}/>
+  }
+
 
   return (
     <Layout>
