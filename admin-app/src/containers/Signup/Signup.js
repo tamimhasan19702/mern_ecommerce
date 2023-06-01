@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import Layout from "../../components/Layout/Layout";
 import { Form,Button,Container,Row,Col } from "react-bootstrap";
 import Input from "../../components/Ui/input/Input";
+import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export default function Signup() {
 
-  const [name,setName] = useState('halum')
+export default function Signup(props) {
+
+  const auth = useSelector(state => state.auth)
+
+
+  if (auth.authenticate) {
+    return <Redirect to={"/"} />;
+  }
 
   return (
     <Layout>
@@ -21,7 +29,7 @@ export default function Signup() {
                   placeholder="First name"
                   value=""
                   type="text"
-                  onChange={() => {setName('montu')}}/>
+                  onChange={() => {}}/>
               </Col>
               <Col md={6}>
               <Input 

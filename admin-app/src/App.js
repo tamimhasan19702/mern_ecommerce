@@ -8,7 +8,7 @@ import Signin from "./containers/Signin/Signin";
 import Signup from "./containers/Signup/Signup";
 import PrivateRoute from "./components/HOC/PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
-import { isUserLoggedIn } from "../../actions";
+import { isUserLoggedIn } from "./actions";
 
 function App() {
   const dispatch = useDispatch();
