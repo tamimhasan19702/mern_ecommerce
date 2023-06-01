@@ -2,6 +2,9 @@ import React from "react";
 import Layout from "../../components/Layout/Layout";
 
 export default function Home() {
+
+ 
+
   return (
     <Layout >
             <div className="container-fluid bg-white text-dark p-5 m-5">
