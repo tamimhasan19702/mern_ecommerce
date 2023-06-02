@@ -3,17 +3,23 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { NavLink, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { signout } from "../../actions";
 
 export default function Header() {
 
   const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+
+  const logout = () => {
+  dispatch(signout())
+  }
 
   const renderLoggedInLinks = () => {
     return (
       <Nav>
         <li className="nav-item">
-          <span className="nav-link">SignOut</span>
+          <span className="nav-link" onClick={logout}>SignOut</span>
         </li>
       </Nav>
     );
