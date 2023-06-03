@@ -58,7 +58,7 @@ export default function Signup(props) {
             onChange={() => {}}
             />
             
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" style={{marginTop: "20px"}}>
               Submit
             </Button>
           </Form>
