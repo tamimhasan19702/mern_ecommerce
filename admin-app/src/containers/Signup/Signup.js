@@ -14,6 +14,7 @@ const Signup = (props) => {
   const [password, setPassword] = useState('')
   const [error,setError] = useState('')
   const auth = useSelector(state => state.auth)
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   const userSignup = (e) => {
@@ -28,6 +29,10 @@ const Signup = (props) => {
 
   if (auth.authenticate) {
     return <Redirect to={"/"} />;
+  }
+
+  if(user.loading){
+    return <p>Loading...!</p>
   }
 
   return (
