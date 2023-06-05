@@ -1,30 +1,21 @@
-/** @format */
-
-// signup action function
-
-import axios from "../helpers/axios";
-import { userConstants } from "./constants";
+import axios from '../helpers/axios';
+import { userConstants } from './constants';
 
 export const signup = (user) => {
-  console.log(user);
-
   return async (dispatch) => {
     dispatch({ type: userConstants.USER_REGISTER_REQUEST });
-    const res = await axios.post(`/admin/signup`, {
-      ...user,
-    });
-
-    if (res.status === 200) {
+    try {
+      const res = await axios.post('/admin/signup', user);
       const { message } = res.data;
       dispatch({
         type: userConstants.USER_REGISTER_SUCCESS,
-        payload: {message},
+        payload: { message },
       });
-    } else {
-      if (res.status === 400) {
+    } catch (error) {
+      if (error.response.status !== 200) {
         dispatch({
           type: userConstants.USER_REGISTER_FAILURE,
-          payload: { error: res.data.error },
+          payload: { error: error.response.data.error },
         });
       }
     }

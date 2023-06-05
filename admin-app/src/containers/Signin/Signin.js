@@ -52,7 +52,10 @@ function Signin(props) {
                 value={password}
                 type="password"
               />
-              <Button variant="primary" type="submit" style={{marginTop: "20px"}}>
+              <Button
+                variant="primary"
+                type="submit"
+                style={{ marginTop: "20px" }}>
                 Submit
               </Button>
             </Form>

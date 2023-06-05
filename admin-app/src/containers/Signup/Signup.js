@@ -4,7 +4,7 @@ import { Form,Button,Container,Row,Col } from "react-bootstrap";
 import Input from "../../components/Ui/input/Input";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signup } from "../../actions";
+import { signup } from "../../actions/user.actions";
 
 const Signup = (props) => {
 
@@ -23,7 +23,7 @@ const Signup = (props) => {
     firstName,lastName,email,password
    } 
 
-   dispatch(Signup(user))
+   dispatch(signup(user))
   }
 
   if (auth.authenticate) {
