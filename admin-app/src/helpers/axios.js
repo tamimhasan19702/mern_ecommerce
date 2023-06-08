@@ -7,6 +7,7 @@ const axiosIntance = axios.create({
     headers: {
         'Authorization': token ? `Bearer ${token}` : ''
     }
-}); 
+});
+
 
 export default axiosIntance;
