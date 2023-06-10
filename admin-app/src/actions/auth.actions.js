@@ -81,10 +81,5 @@ export const signout = () => {
         payload: {error: res.data.error }
       });
     }
-
-    localStorage.clear();
-    dispatch({
-      type: authConstants.LOGOUT_REQUEST
-    })
   }
 }
