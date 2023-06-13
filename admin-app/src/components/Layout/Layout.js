@@ -9,7 +9,11 @@ export default function Layout(props) {
   return (
     <>
       <Header> 
+<<<<<<< HEAD
        
+=======
+
+>>>>>>> 6b88e76aa9671c4029d5c0011f1eb027164f1610
         {
         props.sidebar ? (
           <Container fluid>
