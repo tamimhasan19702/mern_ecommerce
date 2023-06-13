@@ -46,8 +46,6 @@ export default function Header(props) {
 
   return (
 
-    <>
-
     <Navbar
       collapseOnSelect
       expand="lg"
@@ -72,8 +70,8 @@ export default function Header(props) {
       </Container>
     </Navbar>
 
-    {props.children}
-    </>
+
+  
 
   );
 }

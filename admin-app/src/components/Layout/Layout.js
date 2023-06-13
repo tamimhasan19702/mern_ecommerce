@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 export default function Layout(props) {
   return (
     <>
-      <Header> 
+      <Header /> 
         {
         props.sidebar ? (
           <Container fluid>
@@ -35,8 +35,6 @@ export default function Layout(props) {
           props.children
         )
         }
-
-      </Header>
     </>
   );
 }
