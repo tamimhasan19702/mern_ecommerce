@@ -8,7 +8,10 @@ import orderReducer from './order.reducers'
 
 const rootReducer = combineReducers({
      auth: authReducer,
-     user: userReducer
+     user: userReducer,
+     category: categoryReducer,
+     order: orderReducer,
+     product: productReducer
 })
 
 export default rootReducer 
