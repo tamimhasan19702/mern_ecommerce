@@ -18,12 +18,17 @@ export default function Category() {
     <Layout sidebar>
         <Container>
             <Row>
-                <Col>
+                <Col md={12}>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <h3>Category</h3>
                 <button>Add</button>
                 </div>
                 </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+              
+              </Col>
             </Row>
         </Container>
     </Layout>
