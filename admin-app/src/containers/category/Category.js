@@ -1,75 +1,110 @@
-import React, { useEffect,useState } from "react";
-import { Col, Container, Row,Modal,Button} from "react-bootstrap";
+/** @format */
+
+import React, { useEffect, useState } from "react";
+import { Button, Col, Container, Modal, Row} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategory } from "../../actions";
 import Layout from "../../components/Layout/Layout";
+import Input from "../../components/Ui/input/Input";
 
 export default function Category() {
 
-  const category = useSelector(state => state.category);
+  const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [categoryName, setCategoryName] = useState("");
+  const [parentCategoryId,setParentCategoryId] = useState('');
+  const [categoryImage, setCategoryImage] = useState('')
 
   useEffect(() => {
-    dispatch(getAllCategory())
-  
-  
-  },[]);
+    dispatch(getAllCategory());
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const renderCategories = (categories) => {
-
     let myCategories = [];
-    for (let category of categories){
+    for (let category of categories) {
       myCategories.push(
         <li key={category.name}>
           {category.name}
-          {category.children.length > 0 ? (<ul>{renderCategories(category.children)}</ul>) : null}
+          {category.children.length > 0 ? (
+            <ul>{renderCategories(category.children)}</ul>
+          ) : null}
         </li>
-      )
+      );
     }
 
     return myCategories;
+  };
 
-  }
+
+  const createCategoryList = (categories,options = []) => {
+    for(let category of categories){
+     options.push({ value: category._id, name: category.name });
+     if(category.children.length > 0){
+      createCategoryList(category.children, options)
+     }
+    }
+
+    return options;
+  }  
 
   return (
     <Layout sidebar>
-        <Container>
-            <Row>
-                <Col md={12}>
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <h3>Category</h3>
-                <button onClick={handleShow}>Add</button>
-                </div>
-                </Col>
-            </Row>
-            <Row>
-              <Col md={12}>
-              <ul>
-                {renderCategories(category.categories)}
-              </ul>
-              </Col>
-            </Row>
-        </Container>
+      <Container>
+        <Row>
+          <Col md={12}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h3>Category</h3>
+              <button onClick={handleShow}>Add</button>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <ul>{renderCategories(category.categories)}</ul>
+          </Col>
+        </Row>
+      </Container>
 
-     <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Add New Category</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        
+        <Modal.Body>
+          <Input 
+          value={categoryName}
+          placeholder={`Category Name`}
+          onChange = {(e) => setCategoryName(e.target.value)}
+          />
+
+         <select>
+          <option>select category</option>
+          {
+            createCategoryList(category.categories).map(option => 
+              <option 
+              key={option.value}
+              value={option.value}
+              >
+                {option.name}
+              </option>
+              )
+          }
+         </select>
+
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+        
           <Button variant="primary" onClick={handleClose}>
             Save Changes
           </Button>
+        
         </Modal.Footer>
+      
       </Modal>
-
     </Layout>
   );
 }
