@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 export default function Layout(props) {
   return (
     <>
-      <Header> 
+      <Header /> 
         {
         props.sidebar ? (
           <Container fluid>
@@ -17,6 +17,9 @@ export default function Layout(props) {
                 <ul>
                   <li>
                     <NavLink to={"/"}>Home</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to={"/category"}>Category</NavLink>
                   </li>
                   <li>
                     <NavLink to={"/products"}>Products</NavLink>
@@ -35,8 +38,6 @@ export default function Layout(props) {
           props.children
         )
         }
-
-      </Header>
     </>
   );
 }
