@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategory } from "../../actions";
+import { addCategory, getAllCategory } from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Ui/input/Input";
 
@@ -22,13 +22,19 @@ export default function Category() {
   const handleClose = () => {
 
     const form = new FormData();
-    const cat = {
-      categoryName,
-      parentCategoryId,
-      categoryImage
-    }
+   
+    form.append('name',categoryName);
+    form.append('parentId',parentCategoryId);
+    form.append('categoryImage',categoryImage);
+    dispatch(addCategory(form))
 
-    console.log(cat)
+    // const cat = {
+    //   categoryName,
+    //   parentCategoryId,
+    //   categoryImage
+    // }
+
+    // console.log(cat)
 
     setShow(false)
   };
