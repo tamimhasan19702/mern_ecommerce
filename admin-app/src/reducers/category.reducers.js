@@ -1,20 +1,59 @@
+/** @format */
+
 import { categoryConstants } from "../actions/constants";
 
 const initState = {
-    categories: [],
-    loading: false,
-    error: null
+  categories: [],
+  loading: false,
+  error: null,
 };
 
-export default (state = initState,action) => {
-    switch(action.type){
-        case categoryConstants.GET_All_CATEGORIES_SUCCESS: 
-        state = {
-            ...state,
-            categories: action.payload.categories
-        }
-        break;
-    }
+const buildNewCategories = (categories, category) => {
+  let myCategories = [];
 
-    return state;
+  for(let cat of categories){
+  myCategories.push({
+    ...cat,
+    children: cat.children && cat.children.length > 0 ? buildNewCategories(cat.children, category) : []
+  })
+  }
+
+  return myCategories;
 }
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default (state = initState, action) => {
+  // eslint-disable-next-line default-case
+  switch (action.type) {
+    
+    case categoryConstants.GET_All_CATEGORIES_SUCCESS:
+      state = {
+        ...state,
+        categories: action.payload.categories,
+      };
+      break;
+    case categoryConstants.ADD_NEW_CATEGORY_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
+
+    const updatedCategories = buildNewCategories(state.categories, action.payload.category);
+    console.log(updatedCategories)
+
+      state = {
+        ...state,
+        loading: false,
+      };
+      break;
+    case categoryConstants.ADD_NEW_CATEGORY_FAILURE:
+      state = {
+        ...initState,
+      };
+      break;
+  }
+
+  return state;
+};
