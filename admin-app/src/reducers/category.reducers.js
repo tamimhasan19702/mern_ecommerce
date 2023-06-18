@@ -8,17 +8,17 @@ const initState = {
   error: null,
 };
 
-const buildNewCategories = (id, categories, category) => {
+const buildNewCategories = (parentId, categories, category) => {
   let myCategories = [];
 
   for (let cat of categories) {
-    if (cat.parentId && cat.parentId == id) {
+    if (cat._id == parentId) {
       myCategories.push({
         ...cat,
         children:
           cat.children && cat.children.length > 0
             ? buildNewCategories(
-                id,
+                parentId,
                 [
                   ...cat.children,
                   {
@@ -38,7 +38,7 @@ const buildNewCategories = (id, categories, category) => {
         ...cat,
         children:
           cat.children && cat.children.length > 0
-            ? buildNewCategories(id, cat.children, category)
+            ? buildNewCategories(parentId, cat.children, category)
             : [],
       });
     }
