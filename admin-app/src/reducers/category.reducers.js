@@ -8,24 +8,49 @@ const initState = {
   error: null,
 };
 
-const buildNewCategories = (categories, category) => {
+const buildNewCategories = (id, categories, category) => {
   let myCategories = [];
 
-  for(let cat of categories){
-  myCategories.push({
-    ...cat,
-    children: cat.children && cat.children.length > 0 ? buildNewCategories(cat.children, category) : []
-  })
+  for (let cat of categories) {
+    if (cat.parentId && cat.parentId == id) {
+      myCategories.push({
+        ...cat,
+        children:
+          cat.children && cat.children.length > 0
+            ? buildNewCategories(
+                id,
+                [
+                  ...cat.children,
+                  {
+                    _id: category._id,
+                    name: category.name,
+                    slug: categories.slug,
+                    parentId: category.parentId,
+                    children: category.children,
+                  },
+                ],
+                category
+              )
+            : [],
+      });
+    } else {
+      myCategories.push({
+        ...cat,
+        children:
+          cat.children && cat.children.length > 0
+            ? buildNewCategories(id, cat.children, category)
+            : [],
+      });
+    }
   }
 
   return myCategories;
-}
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initState, action) => {
   // eslint-disable-next-line default-case
   switch (action.type) {
-    
     case categoryConstants.GET_All_CATEGORIES_SUCCESS:
       state = {
         ...state,
@@ -40,11 +65,17 @@ export default (state = initState, action) => {
       break;
     case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
 
-    const updatedCategories = buildNewCategories(state.categories, action.payload.category);
-    console.log(updatedCategories)
+    const category = action.payload.category;
+      const updatedCategories = buildNewCategories(
+        category.parentId,
+        state.categories,
+        category
+      );
+      console.log(updatedCategories);
 
       state = {
         ...state,
+        categories: updatedCategories,
         loading: false,
       };
       break;
