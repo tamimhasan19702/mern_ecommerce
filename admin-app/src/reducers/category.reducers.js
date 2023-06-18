@@ -39,9 +39,12 @@ export default (state = initState, action) => {
       };
       break;
     case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
+
+    const updatedCategories = buildNewCategories(state.categories, action.payload.category);
+    console.log(updatedCategories)
+
       state = {
         ...state,
-        categories: buildNewCategories(state.categories, action.payload.category),
         loading: false,
       };
       break;
