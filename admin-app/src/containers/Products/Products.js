@@ -73,6 +73,7 @@ export default function Products(props) {
             value={quantity}
             label="Quantity"
             style={{ marginTop: "20px" }}
+            type={Number}
             placeholder={`Quantity`}
             onChange={(e) => setQuantity(e.target.value)}
           />
@@ -104,11 +105,19 @@ export default function Products(props) {
             ))}
           </select>
 
+          {
+            productPictures.length > 0 ? productPictures.map((pic,index) => 
+             <div key={index}>{pic.name}</div>
+            ) : null
+          }
+
           <Input
+          style={{ marginTop: "20px" }}
           type="file"
           name="productPicture"  
           onChange={handleProductPictures}
           />
+
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>
