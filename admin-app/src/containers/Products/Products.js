@@ -42,6 +42,8 @@ export default function Products(props) {
     ]);
   }
 
+  console.log(productPictures)
+
   return (
     <Layout sidebar>
       <Container>
