@@ -1,10 +1,11 @@
 /** @format */
 
-import React, { useState} from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import Input from "../../components/Ui/input/Input";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct } from "../../actions/product.action";
 
 export default function Products(props) {
   const category = useSelector((state) => state.category);
@@ -15,8 +16,23 @@ export default function Products(props) {
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [productPictures, setProductPictures] = useState("");
+  const dispatch = useDispatch();
 
   const handleClose = () => {
+
+    const form = new FormData();
+    form.append('name',name);
+    form.append('quantity',quantity);
+    form.append('price',price);
+    form.append('description',description);
+    form.append('category',category);
+
+    for(let pic of productPictures){
+      form.append('productPicture',pic)
+    }
+
+    dispatch(addProduct(form))
+    
     setShow(false);
   };
 
@@ -36,13 +52,10 @@ export default function Products(props) {
   };
 
   const handleProductPictures = (e) => {
-    setProductPictures([
-      ...productPictures,
-      e.target.files[0]
-    ]);
-  }
+    setProductPictures([...productPictures, e.target.files[0]]);
+  };
 
-  console.log(productPictures)
+  console.log(productPictures);
 
   return (
     <Layout sidebar>
@@ -105,19 +118,18 @@ export default function Products(props) {
             ))}
           </select>
 
-          {
-            productPictures.length > 0 ? productPictures.map((pic,index) => 
-             <div key={index}>{pic.name}</div>
-            ) : null
-          }
+          {productPictures.length > 0
+            ? productPictures.map((pic, index) => (
+                <div key={index}>{pic.name}</div>
+              ))
+            : null}
 
           <Input
-          style={{ marginTop: "20px" }}
-          type="file"
-          name="productPicture"  
-          onChange={handleProductPictures}
+            style={{ marginTop: "20px" }}
+            type="file"
+            name="productPicture"
+            onChange={handleProductPictures}
           />
-
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>
