@@ -1,4 +1,9 @@
-/** @format */
+/**
+ * * title: User model file
+ * * description: this is the user model file so store data in the mongoose database
+ * * author: Tareq Monower
+ *
+ * @format */
 
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");

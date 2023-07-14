@@ -1,21 +1,30 @@
-/** @format */
+/**
+ * * title: controller functions
+ * * description: this file is to create functions for authenticate users in route folder
+ * * author: Tareq Monower
+ *
+ * @format */
+
 
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const shortid = require("shortid");
 
+//this is for generating token
 const generateJwtToken = (_id, role) => {
   return jwt.sign({ _id, role }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
 };
 
+//signup controller function 
 exports.signup = (req, res) => {
+
   User.findOne({ email: req.body.email }).exec(async (error, user) => {
     if (user)
       return res.status(400).json({
-        error: "User already registered",
+        error: "User already registered in the datavbase",
       });
 
     const { firstName, lastName, email, password } = req.body;
