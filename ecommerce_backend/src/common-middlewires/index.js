@@ -5,21 +5,18 @@
  *
  * @format */
 
+//importing jason web token package
 const jwt = require("jsonwebtoken");
 
-// require sign-in
-
-//
+//requireSignin middlewire to decode user token and alert them about the signin requirement
 exports.requireSignin = (req, res, next) => {
- 
-    if (req.headers.authorization) {
+  if (req.headers.authorization) {
     const token = req.headers.authorization.split(" ")[1];
 
     //decoding jwt token
     const user = jwt.verify(token, process.env.JWT_SECRET);
-    
-    req.user = user;
 
+    req.user = user;
   } else {
     return res.status(400).json({ message: "Authorization required" });
   }
@@ -27,7 +24,7 @@ exports.requireSignin = (req, res, next) => {
   // jwt.decode()
 };
 
-
+// userMiddlewire to ensure that the lgged in request role is user
 exports.userMiddleware = (req, res, next) => {
   if (req.user.role !== "user") {
     return res.status(400).json({ message: "User access denied" });
@@ -35,6 +32,7 @@ exports.userMiddleware = (req, res, next) => {
   next();
 };
 
+// userMiddlewire to ensure that the lgged in request role is admin
 exports.adminMiddleware = (req, res, next) => {
   if (req.user.role !== "admin") {
     return res.status(400).json({ message: "Admin access denied" });

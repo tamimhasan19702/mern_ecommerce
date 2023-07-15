@@ -1,4 +1,9 @@
-/** @format */
+/**
+ * * title: category model file
+ * * description: this is the product category model file to store data in the mongoose database
+ * * author: Tareq Monower
+ *
+ * @format */
 
 const mongoose = require("mongoose");
 const categorySchema = new mongoose.Schema(
