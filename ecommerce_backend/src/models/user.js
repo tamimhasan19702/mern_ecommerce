@@ -1,4 +1,9 @@
-/** @format */
+/**
+ * * title: User model file
+ * * description: this is the user model file so store data in the mongoose database
+ * * author: Tareq Monower
+ *
+ * @format */
 
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
@@ -60,7 +65,7 @@ userSchema.virtual("fullName").get(function () {
 
 userSchema.methods = {
   authenticate: async function (password) {
-    return await bcrypt.compare(password, this.hash_password);
+    return await bcrypt.compareSync(password, this.hash_password);
   },
 };
 

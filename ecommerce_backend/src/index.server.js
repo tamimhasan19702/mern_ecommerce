@@ -1,47 +1,55 @@
-/** @format */
+/**
+ * * title: Flipkart backend server
+ * * description: this is the core backend server file to create the api for our website
+ * * author: Tareq Monower
+ *
+ * @format */
 
-const express = require('express');
-const env = require('dotenv');
+const express = require("express");
+const env = require("dotenv");
+const mongoose = require("mongoose");
+const path = require("path");
+const cors = require("cors");
 
 const app = express();
-const mongoose = require('mongoose');
-const path = require('path');
-const cors = require('cors');
 
-// routes
-const authRoutes = require('./routes/auth');
-const adminRoutes = require('./routes/admin/auth');
-const categoryRoutes = require('./routes/category');
-const productRoutes = require('./routes/product');
-const cartRoutes = require('./routes/cart');
+// importing user routes
+const authRoutes = require("./routes/auth");
+const adminRoutes = require("./routes/admin/auth");
+const categoryRoutes = require("./routes/category");
+const productRoutes = require("./routes/product");
+const cartRoutes = require("./routes/cart");
 
+//adding environment variables
 env.config();
 
-// Add error handling for Mongoose connection
+// Adding mongoose database connection to my API
 mongoose
-    .connect(
-        `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.3a3gnjl.mongodb.net/${process.env.DB_DATABASE}?retryWrites=true&w=majority`,
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true,
-        }
-    )
-    .then(() => {
-        console.log('Database Connected');
-    });
+  .connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.3a3gnjl.mongodb.net/${process.env.DB_DATABASE}?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    }
+  )
+  .then(() => {
+    console.log("Database Connected");
+  });
 
-mongoose.set('useFindAndModify', false);
+mongoose.set("useFindAndModify", false);
 
+//importing all the middlewires here
 app.use(cors());
 app.use(express.json());
-app.use('/public', express.static(path.join(__dirname, 'uploads')));
-app.use('/api', authRoutes);
-app.use('/api', adminRoutes);
-app.use('/api', categoryRoutes);
-app.use('/api', productRoutes);
-app.use('/api', cartRoutes);
+
+app.use("/public", express.static(path.join(__dirname, "uploads")));
+app.use("/api", authRoutes);
+app.use("/api", adminRoutes);
+app.use("/api", categoryRoutes);
+app.use("/api", productRoutes);
+app.use("/api", cartRoutes);
 
 app.listen(process.env.PORT, () => {
-    console.log(`server is running on the port: ${process.env.PORT}`);
+  console.log(`server is running on the port: ${process.env.PORT}`);
 });

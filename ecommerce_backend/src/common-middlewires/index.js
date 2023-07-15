@@ -1,30 +1,43 @@
-/** @format */
-const jwt = require('jsonwebtoken');
+/**
+ * * title: common middlewire functions for both admin and user
+ * * description: common middlewire functions both exist in admin and user
+ * * author: Tareq Monower
+ *
+ * @format */
+
+const jwt = require("jsonwebtoken");
 
 // require sign-in
 
+//
 exports.requireSignin = (req, res, next) => {
+ 
     if (req.headers.authorization) {
-        const token = req.headers.authorization.split(' ')[1];
-        const user = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = user;
-    } else {
-        return res.status(400).json({ message: 'Authorization required' });
-    }
-    next();
-    // jwt.decode()
+    const token = req.headers.authorization.split(" ")[1];
+
+    //decoding jwt token
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    
+    req.user = user;
+
+  } else {
+    return res.status(400).json({ message: "Authorization required" });
+  }
+  next();
+  // jwt.decode()
 };
 
+
 exports.userMiddleware = (req, res, next) => {
-    if (req.user.role !== 'user') {
-        return res.status(400).json({ message: 'User access denied' });
-    }
-    next();
+  if (req.user.role !== "user") {
+    return res.status(400).json({ message: "User access denied" });
+  }
+  next();
 };
 
 exports.adminMiddleware = (req, res, next) => {
-    if (req.user.role !== 'admin') {
-        return res.status(400).json({ message: 'Admin access denied' });
-    }
-    next();
+  if (req.user.role !== "admin") {
+    return res.status(400).json({ message: "Admin access denied" });
+  }
+  next();
 };
