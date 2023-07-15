@@ -12,7 +12,7 @@ const { validateSignUpRequest,validateSignInRequest, isRequestValidated } = requ
 //requiring Router object of the express 
 const router = express.Router();
 
-
+// setting up signin and signup route
 router.post('/signup', validateSignUpRequest ,isRequestValidated,signup);
 router.post('/signin',validateSignInRequest ,isRequestValidated,signin);
 
