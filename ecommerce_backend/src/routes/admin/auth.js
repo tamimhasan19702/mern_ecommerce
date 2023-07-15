@@ -18,6 +18,8 @@ const {requireSignin} = require('../../common-middlewires')
 //router admin signin,signup and signout routes
 router.post('/admin/signup', validateSignUpRequest ,isRequestValidated,signup);
 router.post('/admin/signin',validateSignInRequest ,isRequestValidated,signin);
+
+//clearing admin cookie by the signout function
 router.post('/admin/signout',signout )
 
 module.exports = router;
