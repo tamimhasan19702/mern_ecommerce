@@ -28,7 +28,9 @@ exports.signup = (req, res) => {
 
     // taking data from the request body
     const { firstName, lastName, email, password } = req.body;
+
     const hash_password = await bcrypt.hash(password, 10);
+    
     const _user = new User({
       firstName,
       lastName,
@@ -53,6 +55,7 @@ exports.signup = (req, res) => {
         });
       }
     });
+    
   });
 };
 

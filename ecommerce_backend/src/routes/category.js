@@ -1,13 +1,22 @@
-/** @format */
+/**
+ * * title: category route file
+ * * description: this is the product category route file to direct the product categories with specific routes
+ * * author: Tareq Monower
+ *
+ * @format */
 
 const express = require("express");
 const router = express.Router();
 
+//inserting required controller functions
 const { addCategory, getCategories } = require("../controller/category");
-const {requireSignin,adminMiddleware} = require("../common-middlewires");
-const multer = require('multer');
+//inserting all the common middlewires
+const { requireSignin, adminMiddleware } = require("../common-middlewires");
+//third party packages
+const multer = require("multer");
 const shortId = require("shortid");
 const path = require("path");
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -20,7 +29,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("/category/create", requireSignin, adminMiddleware,upload.single('categoryImage'), addCategory);
+router.post("/category/create",requireSignin,adminMiddleware,upload.single("categoryImage"),addCategory);
 
 router.get("/category/getcategory", getCategories);
 

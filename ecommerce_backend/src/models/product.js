@@ -1,4 +1,9 @@
-/** @format */
+/**
+ * * title: product model file
+ * * description: this is the product model file to store product data with a name and slug type structure in the database
+ * * author: Tareq Monower
+ *
+ * @format */
 
 const mongoose = require("mongoose");
 const productSchema = new mongoose.Schema(
@@ -27,12 +32,10 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
     offer: { type: Number },
-    productPictures: [
-      { img: { type: String, ref: "img" } }
-    ],
+    productPictures: [{ img: { type: String, ref: "img" } }],
     reviews: [
       {
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
         review: String,
       },
     ],
@@ -47,7 +50,8 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     updatedAt: Date,
-
-  },{ timestamps: true });
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("Product", productSchema);

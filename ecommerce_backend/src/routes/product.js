@@ -1,4 +1,9 @@
-/** @format */
+/**
+ * * title: product route file
+ * * description: this is the product route files to access request,response of the user 
+ * * author: Tareq Monower
+ *
+ * @format */
 
 const express = require("express");
 const { requireSignin, adminMiddleware } = require("../common-middlewires");
@@ -17,7 +22,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({storage});
+const upload = multer({ storage });
 
 router.post(
   "/product/create",
@@ -26,6 +31,5 @@ router.post(
   upload.array("productPicture"),
   createProduct
 );
-
 
 module.exports = router;

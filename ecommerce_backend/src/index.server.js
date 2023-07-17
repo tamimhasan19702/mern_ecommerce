@@ -43,13 +43,17 @@ mongoose.set("useFindAndModify", false);
 app.use(cors());
 app.use(express.json());
 
+//declaring a static route with this middlewire backend
 app.use("/public", express.static(path.join(__dirname, "uploads")));
+
+//importing all the api routes
 app.use("/api", authRoutes);
 app.use("/api", adminRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
 app.use("/api", cartRoutes);
 
+//listenting the server
 app.listen(process.env.PORT, () => {
   console.log(`server is running on the port: ${process.env.PORT}`);
 });
