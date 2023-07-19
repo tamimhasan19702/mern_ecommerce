@@ -1,4 +1,9 @@
-/** @format */
+/**
+ * * title: cart controller function
+ * * description: this file is control cart route and as it's last middlewire
+ * * author: Tareq Monower
+ *
+ * @format */
 
 const Cart = require("../models/cart");
 
