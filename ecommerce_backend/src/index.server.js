@@ -43,7 +43,7 @@ mongoose.set("useFindAndModify", false);
 app.use(cors());
 app.use(express.json());
 
-//declaring a static route with this middlewire backend
+//declaring a static route with this middlewire backend 
 app.use("/public", express.static(path.join(__dirname, "uploads")));
 
 //importing all the api routes

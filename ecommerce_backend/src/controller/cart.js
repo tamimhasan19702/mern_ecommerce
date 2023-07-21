@@ -24,11 +24,11 @@ exports.addItemToCart = (req, res) => {
       //if item existed
       if (item) {
         //new condition
-        condition = { user: req.user._id, "cartItems.product": product };
+        condition = { "user": req.user._id, "cartItems.product": product };
         //update and set the cartItems with previous properties and quantity
         update = {
-          $set: {
-            cartItems: {
+          "$set": {
+            "cartItems.$": {
               ...req.body.cartItems,
               quantity: item.quantity + req.body.cartItems.quantity,
             },
@@ -40,8 +40,8 @@ exports.addItemToCart = (req, res) => {
         condition = { user: req.user._id };
         //pushin the item's to the cartItems
         update = {
-          $push: {
-            cartItems: req.body.cartItems,
+          "$push": {
+            "cartItems": req.body.cartItems,
           },
         };
       }
