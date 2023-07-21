@@ -38,14 +38,14 @@ exports.signup = (req, res) => {
       hash_password,
       username: shortid.generate(),
     });
-
+   //saving user data
     _user.save((error, data) => {
       if (error) {
         return res.status(400).json({
           message: "Something went wrong",
         });
       }
-
+   //sending user response
       if (data) {
         const token = generateJwtToken(user._id, user.role);
         const { _id, firstName, lastName, email, role, fullName } = user;
