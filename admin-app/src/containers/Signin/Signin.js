@@ -1,4 +1,13 @@
-/** @format */
+/**
+ * * title: Signin component
+ * * description: Signin component in the react frontend
+ * * author: Tareq Monower
+ * *
+ *
+ * @format
+ */
+
+//* dispatcher is like courier service which delivers actions or information throughout the app
 
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
@@ -14,16 +23,21 @@ function Signin(props) {
   const [error, setError] = useState("");
   const auth = useSelector((state) => state.auth);
 
+  // using dispath in the react file .. dispatch takes an object as argument
   const dispatch = useDispatch();
 
+  //user Login function
   const userLogin = async (e) => {
+    //preventing default event behaviour
     e.preventDefault();
 
+    // creating user object
     const user = {
       email: email,
       password: password,
     };
 
+    //executing the login function from action and dispatching it
     dispatch(login(user));
   };
 
