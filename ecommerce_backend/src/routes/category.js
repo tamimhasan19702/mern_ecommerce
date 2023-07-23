@@ -27,6 +27,7 @@ const storage = multer.diskStorage({
   },
 });
 
+//using multer package which will store files
 const upload = multer({ storage });
 
 router.post("/category/create",requireSignin,adminMiddleware,upload.single("categoryImage"),addCategory);

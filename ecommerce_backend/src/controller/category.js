@@ -50,10 +50,7 @@ exports.addCategory = (req, res) => {
     slug: `${slugify(req.body.name)}-${shortid.generate()}`,
   };
 
-  if (req.file) {
-    categoryObj.categoryImage = `public/${req.file.filename}`;
-  }
-
+  //saving category image to the backend
   if (req.file) {
     categoryObj.categoryImage = `${process.env.API}/public/${req.file.filename}`;
   }

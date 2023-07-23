@@ -1,13 +1,24 @@
+/**
+ * * title: auth.action js file
+ * * description: this file is to do the authentication for users
+ * * author: Tareq Monower
+ * * 
+ */
+
+//importing constants and axios for api call
 import { authConstants } from "./constants";
 import axios from "../helpers/axios";
 
+// auth login function for the user 
 export const login = (user) => {
 
-    console.log(user)
-
+    // dispatching an login action
     return async (dispatch) => {
 
+        //dispatch takes an object with a type and payload for argument
         dispatch({ type: authConstants.LOGIN_REQUEST });
+
+        //doing a axios post request in the server
         const res = await axios.post(`/admin/signin`, {
             ...user
         });

@@ -1,3 +1,10 @@
+/**
+ * * title:constant file
+ * * description: this file store all the constants used in the actions
+ * * author: Tareq Monower
+ * * 
+ */
+
 export const authConstants = {
     LOGIN_REQUEST : 'LOGIN_REQUEST',
     LOGIN_FAILURE: 'LOGIN_FAILURE',
