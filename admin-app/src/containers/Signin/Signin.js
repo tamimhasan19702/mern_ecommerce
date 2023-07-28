@@ -9,7 +9,7 @@
 
 //* dispatcher is like courier service which delivers actions or information throughout the app
 
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import Input from "../../components/Ui/input/Input";
@@ -21,20 +21,22 @@ function Signin(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  //taking the auth state from the redux store
   const auth = useSelector((state) => state.auth);
 
   // using dispath to dispatch action
   const dispatch = useDispatch();
 
   //user Login function
-  const userLogin = async (e) => {
+  const userLogin = (e) => {
     //preventing default event behaviour
     e.preventDefault();
 
     // creating user object
     const user = {
-      email: email,
-      password: password,
+     email,
+     password
     };
 
     //executing the login function from action and dispatching it

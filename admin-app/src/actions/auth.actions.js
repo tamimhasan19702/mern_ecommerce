@@ -20,6 +20,7 @@ export const login = (user) => {
 
     //doing a axios post request in the server
     const res = await axios.post(`/admin/signin`, {
+      //destructuring the user object
       ...user,
     });
 
@@ -28,6 +29,8 @@ export const login = (user) => {
       //setting token and user in the localStorage
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
+
+      //dispatching the login success action
       dispatch({
         type: authConstants.LOGIN_SUCCESS,
         payload: {
@@ -37,6 +40,7 @@ export const login = (user) => {
       });
     } else {
       if (res.status === 400) {
+        //if status 400 then dispatch login failure action
         dispatch({
           type: authConstants.LOGIN_FAILURE,
           payload: { error: res.data.error },
@@ -46,7 +50,7 @@ export const login = (user) => {
   };
 };
 
-//checking if user is logged in or not
+// if user is logged in or not function
 export const isUserLoggedIn = () => {
   return async (dispatch) => {
     //getting token from the localStorage

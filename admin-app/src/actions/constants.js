@@ -5,6 +5,7 @@
  * * 
  */
 
+//authentication constants
 export const authConstants = {
     LOGIN_REQUEST : 'LOGIN_REQUEST',
     LOGIN_FAILURE: 'LOGIN_FAILURE',
@@ -14,12 +15,14 @@ export const authConstants = {
     LOGOUT_FAILURE: 'LOGOUT_FAILURE',
 }
 
+//user constants
 export const userConstants = {
     USER_REGISTER_REQUEST: 'USER_REGISTER_REQUEST', 
     USER_REGISTER_SUCCESS: 'USER_REGISTER_SUCCESS', 
     USER_REGISTER_FAILURE: 'USER_REGISTER_FAILURE' 
 }
 
+//category constants
 export const categoryConstants = {
     GET_All_CATEGORIES_REQUEST: `GET_All_CATEGORIES_REQUEST`,
     GET_All_CATEGORIES_SUCCESS: `GET_All_CATEGORIES_SUCCESS`,
@@ -29,6 +32,7 @@ export const categoryConstants = {
     ADD_NEW_CATEGORY_FAILURE: `ADD_NEW_CATEGORY_FAILURE`,
 }
 
+//product constants
 export const productConstants = {
     GET_ALL_PRODUCTS_REQUEST: "GET_ALL_PRODUCTS_REQUEST",
     GET_ALL_PRODUCTS_SUCCESS: "GET_ALL_PRODUCTS_SUCCESS",

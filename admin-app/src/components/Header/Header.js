@@ -1,4 +1,11 @@
-/** @format */
+/**
+ * * title:Header component
+ * * description: this is header component that was used in this project
+ * * author: Tareq Monower
+ * *
+ *
+ * @format
+ */
 
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
@@ -16,6 +23,7 @@ export default function Header(props) {
     dispatch(signout());
   };
 
+  //if user logged in then render this in the header
   const renderLoggedInLinks = () => {
     return (
       <Nav>
