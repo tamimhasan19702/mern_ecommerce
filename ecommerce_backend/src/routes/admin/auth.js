@@ -20,6 +20,6 @@ router.post('/admin/signup', validateSignUpRequest ,isRequestValidated,signup);
 router.post('/admin/signin',validateSignInRequest ,isRequestValidated,signin);
 
 //clearing admin cookie by the signout function
-router.post('/admin/signout',signout )
+router.post('/admin/signout',requireSignin,signout )
 
 module.exports = router;
