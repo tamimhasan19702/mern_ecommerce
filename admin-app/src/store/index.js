@@ -12,6 +12,6 @@ import rootReducer from '../reducers'
 import thunk from 'redux-thunk'
 
 //creating store with redux
-const store = createStore(rootReducer,applyMiddleware(thunk)); //createstore(callback func, middlewire)
+const store = createStore(rootReducer,applyMiddleware(thunk)); //createstore(reducer, middlewire)
 
 export default store;

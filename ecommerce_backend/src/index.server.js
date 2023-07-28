@@ -40,7 +40,7 @@ mongoose
 mongoose.set("useFindAndModify", false);
 
 //importing all the middlewires here
-app.use(cors());
+app.use(cors());//using this call this api from anywhere in the localhost
 app.use(express.json());
 
 //declaring a static route with this middlewire backend 

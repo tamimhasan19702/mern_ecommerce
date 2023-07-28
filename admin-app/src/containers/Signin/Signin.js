@@ -23,7 +23,7 @@ function Signin(props) {
   const [error, setError] = useState("");
   const auth = useSelector((state) => state.auth);
 
-  // using dispath in the react file .. dispatch takes an object as argument
+  // using dispath to dispatch action
   const dispatch = useDispatch();
 
   //user Login function
