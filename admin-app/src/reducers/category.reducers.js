@@ -1,4 +1,11 @@
-/** @format */
+/**
+ * * title: category.reducer js file
+ * * description: reducing category actions with the proper state and action
+ * * author: Tareq Monower
+ * *
+ *
+ * @format
+ */
 
 import { categoryConstants } from "../actions/constants";
 
@@ -64,8 +71,7 @@ export default (state = initState, action) => {
       };
       break;
     case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
-
-    const category = action.payload.category;
+      const category = action.payload.category;
       const updatedCategories = buildNewCategories(
         category.parentId,
         state.categories,

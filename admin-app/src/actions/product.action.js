@@ -1,4 +1,11 @@
-/** @format */
+/**
+ * * title: product.action js file
+ * * description: this file is to store the action related for the products
+ * * author: Tareq Monower
+ * *
+ *
+ * @format
+ */
 
 import axios from "../helpers/axios";
 import { productConstants } from "./constants";
