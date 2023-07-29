@@ -1,3 +1,12 @@
+/**
+ * * title: category.action js file
+ * * description: this file is to do the authentication for users
+ * * author: Tareq Monower
+ * *
+ *
+ * @format
+ */
+
 import axios from "../helpers/axios";
 import { categoryConstants } from "./constants";
 

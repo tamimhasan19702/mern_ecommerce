@@ -1,4 +1,11 @@
-/** @format */
+/**
+ * * title: Category component
+ * * description: this component is to show all the product categories in the front end
+ * * author: Tareq Monower
+ * *
+ *
+ * @format
+ */
 
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Modal, Row } from "react-bootstrap";
@@ -20,13 +27,12 @@ export default function Category() {
   }, []);
 
   const handleClose = () => {
-
     const form = new FormData();
-   
-    form.append('name',categoryName);
-    form.append('parentId',parentCategoryId);
-    form.append('categoryImage',categoryImage);
-    dispatch(addCategory(form))
+
+    form.append("name", categoryName);
+    form.append("parentId", parentCategoryId);
+    form.append("categoryImage", categoryImage);
+    dispatch(addCategory(form));
 
     // const cat = {
     //   categoryName,
@@ -36,7 +42,7 @@ export default function Category() {
 
     // console.log(cat)
 
-    setShow(false)
+    setShow(false);
   };
   const handleShow = () => setShow(true);
 
@@ -67,11 +73,9 @@ export default function Category() {
     return options;
   };
 
-
-   const handleCategoryImage = (e) => {
+  const handleCategoryImage = (e) => {
     setCategoryImage(e.target.files[0]);
-   }
-
+  };
 
   return (
     <Layout sidebar>
@@ -103,30 +107,26 @@ export default function Category() {
             onChange={(e) => setCategoryName(e.target.value)}
           />
 
-          <select 
-          className="form-control" 
-          style={{ marginTop: "20px" }}
-          value={parentCategoryId}
-          onChange={(e) => setParentCategoryId(e.target.value)}
-          >
-
+          <select
+            className="form-control"
+            style={{ marginTop: "20px" }}
+            value={parentCategoryId}
+            onChange={(e) => setParentCategoryId(e.target.value)}>
             <option>select category</option>
             {createCategoryList(category.categories).map((option) => (
               <option key={option.value} value={option.value}>
                 {option.name}
               </option>
-
             ))}
           </select>
 
           <input
             className="form-control"
-            style={{marginTop: "20px"}}
+            style={{ marginTop: "20px" }}
             type="file"
             name="categoryImage"
             onChange={handleCategoryImage}
           />
-
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>
