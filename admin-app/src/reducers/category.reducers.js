@@ -36,14 +36,16 @@ export default (state = initState, action) => {
       break;
     //adding the new category success reducer with action type
     case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
+      //category from action.payload
       const category = action.payload.category;
+
       const updatedCategories = buildNewCategories(
         category.parentId,
         state.categories,
         category
       );
-      console.log(updatedCategories);
 
+      //updated category
       state = {
         ...state,
         categories: updatedCategories,
@@ -62,11 +64,16 @@ export default (state = initState, action) => {
   return state;
 };
 
+// buildNewCategories to push new categories to the previous category list
+//prevCategory - categories, newCategory
 const buildNewCategories = (parentId, categories, category) => {
+  // creating blank categories array
   let myCategories = [];
 
   for (let cat of categories) {
-    if (cat._id == parentId) {
+    //if previous category element's id matches with the parentId then proceed this
+    if (cat._id === parentId) {
+      //pushing category element and also setting the children category
       myCategories.push({
         ...cat,
         children:
@@ -88,6 +95,7 @@ const buildNewCategories = (parentId, categories, category) => {
             : [],
       });
     } else {
+      // if category id doesn't match with the parentId then
       myCategories.push({
         ...cat,
         children:
