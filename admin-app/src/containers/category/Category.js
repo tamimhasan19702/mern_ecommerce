@@ -50,42 +50,43 @@ export default function Category() {
     return myCategories;
   };
 
-  //using this to show the modal when clicked
+  //using this to show the category frontend when the modal form is done submitting
   const handleShow = () => setShow(true);
 
+  //using is to open the modal form
   const handleClose = () => {
+    //creating a new form object with formData function
     const form = new FormData();
 
+    //appending the category name,parentId and categoryImage in the newly created form data
     form.append("name", categoryName);
     form.append("parentId", parentCategoryId);
     form.append("categoryImage", categoryImage);
+    //dispatching the addCategory action here
     dispatch(addCategory(form));
-
-    // const cat = {
-    //   categoryName,
-    //   parentCategoryId,
-    //   categoryImage
-    // }
-
-    // console.log(cat)
 
     setShow(false);
   };
 
-
-  
-
-  const createCategoryList = (categories, options = []) => {
+  //creating new category list with it
+  const createCategoryList = (categories) => {
+    //empty options array
+    let options = [];
+    //creating a empty option array as argument
     for (let category of categories) {
+      //pushing category id and name in the option array
       options.push({ value: category._id, name: category.name });
+      //if category children exist then doing the same thing for them
       if (category.children.length > 0) {
         createCategoryList(category.children, options);
       }
     }
 
+    //returning the options array
     return options;
   };
 
+  //handeling the category images here
   const handleCategoryImage = (e) => {
     setCategoryImage(e.target.files[0]);
   };
@@ -131,13 +132,17 @@ export default function Category() {
             value={parentCategoryId}
             onChange={(e) => setParentCategoryId(e.target.value)}>
             <option>select category</option>
+
+            {/* providing categories in the creteCategory function which retruns a option array */}
             {createCategoryList(category.categories).map((option) => (
+              //mapping through the option array and inserting each all the array's name value
               <option key={option.value} value={option.value}>
                 {option.name}
               </option>
             ))}
           </select>
 
+          {/* taking category handling image with this input */}
           <input
             className="form-control"
             style={{ marginTop: "20px" }}
@@ -147,12 +152,12 @@ export default function Category() {
           />
         </Modal.Body>
         <Modal.Footer>
+          {/* handleClose function finally submits everything in the backend and closes the modal popup */}
           <Button variant="primary" onClick={handleClose}>
             Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
-
     </Layout>
   );
 }
