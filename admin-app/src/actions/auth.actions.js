@@ -1,6 +1,6 @@
 /**
  * * title: auth.action js file
- * * description: this file is to do the authentication for users
+ * * description: this file is to hold all the necessary authentication action 
  * * author: Tareq Monower
  * *
  *

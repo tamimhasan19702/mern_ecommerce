@@ -1,4 +1,12 @@
-/** @format */
+/**
+ * * title: Signup component
+ * * description: Signup component for user to create a user so they can sign in later
+ * * author: Tareq Monower
+ * *
+ *
+ * @format
+ */
+
 
 import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";

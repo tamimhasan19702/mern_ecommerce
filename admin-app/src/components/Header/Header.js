@@ -13,9 +13,8 @@ import { NavLink, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signout } from "../../actions";
 
-
 export default function Header(props) {
-  
+  //taking auth state from the redux store
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -28,13 +27,15 @@ export default function Header(props) {
     return (
       <Nav>
         <li className="nav-item">
-          <span className="nav-link" onClick={logout}>SignOut</span>
-
+          <span className="nav-link" onClick={logout}>
+            SignOut
+          </span>
         </li>
       </Nav>
     );
   };
 
+  //if user not logged in then just render this in the header
   const renderNonLoggedInLinks = () => {
     return (
       <Nav>
@@ -53,7 +54,6 @@ export default function Header(props) {
   };
 
   return (
-
     <Navbar
       collapseOnSelect
       expand="lg"
@@ -69,17 +69,10 @@ export default function Header(props) {
         <Navbar.Collapse
           id="responsive-navbar-nav"
           className="justify-content-end">
-          <Nav className="mr-auto">
-
-
-          </Nav>
+          <Nav className="mr-auto"></Nav>
           {auth.authenticate ? renderLoggedInLinks() : renderNonLoggedInLinks()}
         </Navbar.Collapse>
       </Container>
     </Navbar>
-
-
-  
-
   );
 }

@@ -14,7 +14,7 @@ import categoryReducer from './category.reducers'
 import orderReducer from './order.reducers'
 
 // reducer with a state and action as argument. reducer(state,action)
-// adding all the reducer in a object
+// combinig all the reducer in a root reducer object
 const rootReducer = combineReducers({
      auth: authReducer,
      user: userReducer,
