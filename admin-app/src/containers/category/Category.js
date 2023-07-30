@@ -15,16 +15,43 @@ import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Ui/input/Input";
 
 export default function Category() {
+  //taking category value fron the state
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
+
   const [show, setShow] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [parentCategoryId, setParentCategoryId] = useState("");
   const [categoryImage, setCategoryImage] = useState("");
 
+  //using this to getting all the categories from the backend
   useEffect(() => {
     dispatch(getAllCategory());
-  }, []);
+  }, [dispatch]);
+
+  //rendering the categories in the frontend with this function
+  const renderCategories = (categories) => {
+    //blank my category
+    let myCategories = [];
+    for (let category of categories) {
+      //pushing new category element in the blank myCategories array
+      myCategories.push(
+        //creating a list item and rendering category items and adding category name as the key
+        <li key={category.name}>
+          {category.name}
+          {/* if category children exist then recall this function for it's children */}
+          {category.children.length > 0 ? (
+            <ul>{renderCategories(category.children)}</ul>
+          ) : null}
+        </li>
+      );
+    }
+
+    return myCategories;
+  };
+
+  //using this to show the modal when clicked
+  const handleShow = () => setShow(true);
 
   const handleClose = () => {
     const form = new FormData();
@@ -44,23 +71,9 @@ export default function Category() {
 
     setShow(false);
   };
-  const handleShow = () => setShow(true);
 
-  const renderCategories = (categories) => {
-    let myCategories = [];
-    for (let category of categories) {
-      myCategories.push(
-        <li key={category.name}>
-          {category.name}
-          {category.children.length > 0 ? (
-            <ul>{renderCategories(category.children)}</ul>
-          ) : null}
-        </li>
-      );
-    }
 
-    return myCategories;
-  };
+  
 
   const createCategoryList = (categories, options = []) => {
     for (let category of categories) {
@@ -78,7 +91,9 @@ export default function Category() {
   };
 
   return (
+    //importing the default layout with the sidebar prop
     <Layout sidebar>
+      {/* category container */}
       <Container>
         <Row>
           <Col md={12}>
@@ -88,13 +103,16 @@ export default function Category() {
             </div>
           </Col>
         </Row>
+        {/* redering the categories to the frontend */}
         <Row>
           <Col md={12}>
+            {/* calling this renderCategory function with the category as argument we got from the redux store*/}
             <ul>{renderCategories(category.categories)}</ul>
           </Col>
         </Row>
       </Container>
 
+      {/* category input modal item */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Category</Modal.Title>
@@ -134,6 +152,7 @@ export default function Category() {
           </Button>
         </Modal.Footer>
       </Modal>
+
     </Layout>
   );
 }

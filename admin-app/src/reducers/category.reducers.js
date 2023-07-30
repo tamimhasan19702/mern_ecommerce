@@ -9,10 +9,57 @@
 
 import { categoryConstants } from "../actions/constants";
 
+//intial state of the categories
 const initState = {
   categories: [],
   loading: false,
   error: null,
+};
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default (state = initState, action) => {
+  // eslint-disable-next-line default-case
+  switch (action.type) {
+    //getting all the categoris success request and sending categories as payload
+    case categoryConstants.GET_All_CATEGORIES_SUCCESS:
+      state = {
+        ...state,
+        categories: action.payload.categories,
+      };
+      break;
+    // adding new category in the backend request
+    case categoryConstants.ADD_NEW_CATEGORY_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    //adding the new category success reducer with action type
+    case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
+      const category = action.payload.category;
+      const updatedCategories = buildNewCategories(
+        category.parentId,
+        state.categories,
+        category
+      );
+      console.log(updatedCategories);
+
+      state = {
+        ...state,
+        categories: updatedCategories,
+        loading: false,
+      };
+      break;
+    //adding the new category failurereducer with action type
+    case categoryConstants.ADD_NEW_CATEGORY_FAILURE:
+      state = {
+        ...initState,
+      };
+      break;
+  }
+
+  //returning the state after all the actions
+  return state;
 };
 
 const buildNewCategories = (parentId, categories, category) => {
@@ -52,45 +99,4 @@ const buildNewCategories = (parentId, categories, category) => {
   }
 
   return myCategories;
-};
-
-// eslint-disable-next-line import/no-anonymous-default-export
-export default (state = initState, action) => {
-  // eslint-disable-next-line default-case
-  switch (action.type) {
-    case categoryConstants.GET_All_CATEGORIES_SUCCESS:
-      state = {
-        ...state,
-        categories: action.payload.categories,
-      };
-      break;
-    case categoryConstants.ADD_NEW_CATEGORY_REQUEST:
-      state = {
-        ...state,
-        loading: true,
-      };
-      break;
-    case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
-      const category = action.payload.category;
-      const updatedCategories = buildNewCategories(
-        category.parentId,
-        state.categories,
-        category
-      );
-      console.log(updatedCategories);
-
-      state = {
-        ...state,
-        categories: updatedCategories,
-        loading: false,
-      };
-      break;
-    case categoryConstants.ADD_NEW_CATEGORY_FAILURE:
-      state = {
-        ...initState,
-      };
-      break;
-  }
-
-  return state;
 };
