@@ -36,7 +36,7 @@ export default (state = initState, action) => {
       break;
     //adding the new category success reducer with action type
     case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
-      //category from action.payload
+      //newly added category from action.payload
       const category = action.payload.category;
 
       const updatedCategories = buildNewCategories(
@@ -66,40 +66,54 @@ export default (state = initState, action) => {
 
 // buildNewCategories to push new categories to the previous category list
 //prevCategory - categories, newCategory
+//this function only work if only want to create some children category
 const buildNewCategories = (parentId, categories, category) => {
   // creating blank categories array
   let myCategories = [];
 
+  //if we want to create the main parent Category
+  if (parentId === undefined) {
+    return [
+      ...categories,
+      {
+        _id: category._id,
+        name: category.name,
+        slug: category.slug,
+        children: [],
+      },
+    ];
+  }
+
+  //working with  the category children
   for (let cat of categories) {
     //if previous category element's id matches with the parentId then proceed this
     if (cat._id === parentId) {
       //pushing category element and also setting the children category
       myCategories.push({
         ...cat,
-        children:
-          cat.children && cat.children.length > 0
-            ? buildNewCategories(
-                parentId,
-                [
-                  ...cat.children,
-                  {
-                    _id: category._id,
-                    name: category.name,
-                    slug: categories.slug,
-                    parentId: category.parentId,
-                    children: category.children,
-                  },
-                ],
-                category
-              )
-            : [],
+        children: cat.children
+          ? buildNewCategories(
+              parentId,
+              [
+                ...cat.children,
+                {
+                  _id: category._id,
+                  name: category.name,
+                  slug: categories.slug,
+                  parentId: category.parentId,
+                  children: category.children,
+                },
+              ],
+              category
+            )
+          : [],
       });
     } else {
       // if category id doesn't match with the parentId then
       myCategories.push({
         ...cat,
         children:
-          cat.children && cat.children.length > 0
+          cat.children 
             ? buildNewCategories(parentId, cat.children, category)
             : [],
       });

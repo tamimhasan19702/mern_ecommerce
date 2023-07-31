@@ -7,10 +7,10 @@
  * @format
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addCategory, getAllCategory } from "../../actions";
+import { addCategory} from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Ui/input/Input";
 
@@ -24,10 +24,6 @@ export default function Category() {
   const [parentCategoryId, setParentCategoryId] = useState("");
   const [categoryImage, setCategoryImage] = useState("");
 
-  //using this to getting all the categories from the backend
-  useEffect(() => {
-    dispatch(getAllCategory());
-  }, [dispatch]);
 
   //rendering the categories in the frontend with this function
   const renderCategories = (categories) => {
@@ -51,7 +47,9 @@ export default function Category() {
   };
 
   //using this to show the category frontend when the modal form is done submitting
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true)
+  };
 
   //using is to open the modal form
   const handleClose = () => {
@@ -62,6 +60,8 @@ export default function Category() {
     form.append("name", categoryName);
     form.append("parentId", parentCategoryId);
     form.append("categoryImage", categoryImage);
+    setCategoryName('')
+    setParentCategoryId('')
     //dispatching the addCategory action here
     dispatch(addCategory(form));
 
@@ -69,9 +69,7 @@ export default function Category() {
   };
 
   //creating new category list with it
-  const createCategoryList = (categories) => {
-    //empty options array
-    let options = [];
+  const createCategoryList = (categories, options = []) => {
     //creating a empty option array as argument
     for (let category of categories) {
       //pushing category id and name in the option array
@@ -114,7 +112,7 @@ export default function Category() {
       </Container>
 
       {/* category input modal item */}
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} >
         <Modal.Header closeButton>
           <Modal.Title>Add New Category</Modal.Title>
         </Modal.Header>

@@ -34,9 +34,9 @@ const getProducts = () => {
 //adding product from the backend
 export const addProduct = (form) => {
   return async (dispatch) => {
+    //dispatching product add request
+    dispatch({ type: productConstants.ADD_PRODUCT_REQUEST });
     try {
-      //dispatching product add request
-      dispatch({ type: productConstants.ADD_PRODUCT_REQUEST });
       //expecting a form in the this function argument a with the product/create route
       const res = await axios.post(`product/create`, form);
 
@@ -49,7 +49,7 @@ export const addProduct = (form) => {
         dispatch({ type: productConstants.ADD_PRODUCT_FAILURE });
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
 };
