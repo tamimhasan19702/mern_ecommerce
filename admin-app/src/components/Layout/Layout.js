@@ -39,7 +39,7 @@ export default function Layout(props) {
                 </li>
               </ul>
             </Col>
-            <Col md={10} style={{ marginLeft: "auto" }}>
+            <Col md={10} style={{ marginLeft: "auto" , paddingTop: "60px"}}>
               {/* if there's any sub category show those */}
               {props.children}
             </Col>
