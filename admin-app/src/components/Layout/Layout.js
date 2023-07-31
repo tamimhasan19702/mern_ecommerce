@@ -26,7 +26,7 @@ export default function Layout(props) {
             <Col md={2} className="sidebar">
               <ul>
                 <li>
-                  <NavLink to={"/"}>Home</NavLink>
+                  <NavLink to={"/"} exact={true}>Home</NavLink>
                 </li>
                 <li>
                   <NavLink to={"/category"}>Category</NavLink>
@@ -39,7 +39,7 @@ export default function Layout(props) {
                 </li>
               </ul>
             </Col>
-            <Col md={10} style={{ marginLeft: "auto" }}>
+            <Col md={10} style={{ marginLeft: "auto" , paddingTop: "60px"}}>
               {/* if there's any sub category show those */}
               {props.children}
             </Col>

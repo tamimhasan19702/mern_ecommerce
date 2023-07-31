@@ -1,12 +1,11 @@
 /**
- * * title: Signup component
- * * description: Signup component for user to create a user so they can sign in later
+ * * title: Product component
+ * * description: Product component used to display product items in the frontend
  * * author: Tareq Monower
  * *
  *
  * @format
  */
-
 
 import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
@@ -16,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../actions/product.action";
 
 export default function Products(props) {
+  //taking category values from the redux state
   const category = useSelector((state) => state.category);
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
@@ -27,20 +27,21 @@ export default function Products(props) {
   const dispatch = useDispatch();
 
   const handleClose = () => {
-
+    //creatiing a new form object data with the following fields
     const form = new FormData();
-    form.append('name',name);
-    form.append('quantity',quantity);
-    form.append('price',price);
-    form.append('description',description);
-    form.append('category',category);
+    form.append("name", name);
+    form.append("quantity", quantity);
+    form.append("price", price);
+    form.append("description", description);
+    form.append("category", category);
 
-    for(let pic of productPictures){
-      form.append('productPicture',pic)
+    //setting up each product and appending them in the array
+    for (let pic of productPictures) {
+      form.append("productPicture", pic);
     }
+    //dispatching the add product action with the new  form object
+    dispatch(addProduct(form));
 
-    dispatch(addProduct(form))
-    
     setShow(false);
   };
 
@@ -59,11 +60,10 @@ export default function Products(props) {
     return options;
   };
 
+  //handeling product puctures in a array
   const handleProductPictures = (e) => {
     setProductPictures([...productPictures, e.target.files[0]]);
   };
-
-  console.log(productPictures);
 
   return (
     <Layout sidebar>
@@ -78,6 +78,7 @@ export default function Products(props) {
         </Row>
       </Container>
 
+      {/* product modal input */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Product</Modal.Title>
@@ -113,12 +114,14 @@ export default function Products(props) {
             onChange={(e) => setDescription(e.target.value)}
           />
 
+          {/* option selection */}
           <select
             className="form-control"
             style={{ marginTop: "20px" }}
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}>
             <option>select category</option>
+
             {createCategoryList(category.categories).map((option) => (
               <option key={option.value} value={option.value}>
                 {option.name}
@@ -126,6 +129,7 @@ export default function Products(props) {
             ))}
           </select>
 
+         {/* mapping through the productPictures array and display the names in the frontend*/}
           {productPictures.length > 0
             ? productPictures.map((pic, index) => (
                 <div key={index}>{pic.name}</div>

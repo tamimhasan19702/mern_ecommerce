@@ -10,6 +10,7 @@
 import axios from "../helpers/axios";
 import { productConstants } from "./constants";
 
+//getting product from the backend with this async action
 const getProducts = () => {
   return async (dispatch) => {
     try {
@@ -30,19 +31,25 @@ const getProducts = () => {
   };
 };
 
+//adding product from the backend
 export const addProduct = (form) => {
   return async (dispatch) => {
+    //dispatching product add request
+    dispatch({ type: productConstants.ADD_PRODUCT_REQUEST });
     try {
-      dispatch({ type: productConstants.ADD_PRODUCT_REQUEST });
+      //expecting a form in the this function argument a with the product/create route
       const res = await axios.post(`product/create`, form);
+
+      //if response status code is 201 then return this process request and also dispatch getProducts function
       if (res.status === 201) {
         dispatch({ type: productConstants.ADD_PRODUCT_SUCCESS });
         dispatch(getProducts());
       } else {
+        //if response failed then response this request
         dispatch({ type: productConstants.ADD_PRODUCT_FAILURE });
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
 };
