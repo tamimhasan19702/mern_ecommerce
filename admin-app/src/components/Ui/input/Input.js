@@ -1,4 +1,12 @@
-/** @format */
+/**
+ * * title: Input component
+ * * description: this is the primary input * * component that is used in the form
+ * * author: Tareq Monower
+ * *
+ *
+ * @format
+ */
+
 
 import React from "react";
 import { Form } from "react-bootstrap";

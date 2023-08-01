@@ -112,6 +112,7 @@ export default function Category() {
       </Container>
 
       {/* category input modal item */}
+     
       <Modal show={show} onHide={handleClose} >
         <Modal.Header closeButton>
           <Modal.Title>Add New Category</Modal.Title>
@@ -156,6 +157,8 @@ export default function Category() {
           </Button>
         </Modal.Footer>
       </Modal>
+
+
     </Layout>
   );
 }
