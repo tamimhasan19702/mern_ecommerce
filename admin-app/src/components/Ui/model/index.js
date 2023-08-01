@@ -10,7 +10,6 @@
 
 import React from "react";
 import { Modal,Button } from "react-bootstrap";
-import Input from "../input/Input";
 
 function NewModal(props) {
   return (
@@ -18,7 +17,10 @@ function NewModal(props) {
     <Modal.Header closeButton>
       <Modal.Title>{props.ModalTitle}</Modal.Title>
     </Modal.Header>
-
+       
+       <Modal.Body>
+        {props.children}
+       </Modal.Body>
   
     <Modal.Footer>
       {/* handleClose function finally submits everything in the backend and closes the modal popup */}

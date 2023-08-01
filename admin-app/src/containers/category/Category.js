@@ -8,11 +8,12 @@
  */
 
 import React, { useState } from "react";
-import { Button, Col, Container, Modal, Row } from "react-bootstrap";
+import {  Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addCategory} from "../../actions";
+import { addCategory } from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Ui/input/Input";
+import NewModal from "../../components/Ui/model";
 
 export default function Category() {
   //taking category value fron the state
@@ -23,7 +24,6 @@ export default function Category() {
   const [categoryName, setCategoryName] = useState("");
   const [parentCategoryId, setParentCategoryId] = useState("");
   const [categoryImage, setCategoryImage] = useState("");
-
 
   //rendering the categories in the frontend with this function
   const renderCategories = (categories) => {
@@ -48,7 +48,7 @@ export default function Category() {
 
   //using this to show the category frontend when the modal form is done submitting
   const handleShow = () => {
-    setShow(true)
+    setShow(true);
   };
 
   //using is to open the modal form
@@ -60,8 +60,8 @@ export default function Category() {
     form.append("name", categoryName);
     form.append("parentId", parentCategoryId);
     form.append("categoryImage", categoryImage);
-    setCategoryName('')
-    setParentCategoryId('')
+    setCategoryName("");
+    setParentCategoryId("");
     //dispatching the addCategory action here
     dispatch(addCategory(form));
 
@@ -112,53 +112,42 @@ export default function Category() {
       </Container>
 
       {/* category input modal item */}
-     
-      <Modal show={show} onHide={handleClose} >
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Category</Modal.Title>
-        </Modal.Header>
 
-        <Modal.Body>
-          <Input
-            value={categoryName}
-            placeholder={`Category Name`}
-            onChange={(e) => setCategoryName(e.target.value)}
-          />
+      <NewModal
+        show={show}
+        handleClose={handleClose}
+        ModalTitle={"Add New Category"}>
+        <Input
+          value={categoryName}
+          placeholder={`Category Name`}
+          onChange={(e) => setCategoryName(e.target.value)}
+        />
 
-          <select
-            className="form-control"
-            style={{ marginTop: "20px" }}
-            value={parentCategoryId}
-            onChange={(e) => setParentCategoryId(e.target.value)}>
-            <option>select category</option>
+        <select
+          className="form-control"
+          style={{ marginTop: "20px" }}
+          value={parentCategoryId}
+          onChange={(e) => setParentCategoryId(e.target.value)}>
+          <option>select category</option>
 
-            {/* providing categories in the creteCategory function which retruns a option array */}
-            {createCategoryList(category.categories).map((option) => (
-              //mapping through the option array and inserting each all the array's name value
-              <option key={option.value} value={option.value}>
-                {option.name}
-              </option>
-            ))}
-          </select>
+          {/* providing categories in the creteCategory function which retruns a option array */}
+          {createCategoryList(category.categories).map((option) => (
+            //mapping through the option array and inserting each all the array's name value
+            <option key={option.value} value={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select>
 
-          {/* taking category handling image with this input */}
-          <input
-            className="form-control"
-            style={{ marginTop: "20px" }}
-            type="file"
-            name="categoryImage"
-            onChange={handleCategoryImage}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          {/* handleClose function finally submits everything in the backend and closes the modal popup */}
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-
+        {/* taking category handling image with this input */}
+        <input
+          className="form-control"
+          style={{ marginTop: "20px" }}
+          type="file"
+          name="categoryImage"
+          onChange={handleCategoryImage}
+        />
+      </NewModal>
     </Layout>
   );
 }

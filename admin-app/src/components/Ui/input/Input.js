@@ -28,6 +28,7 @@ const Input = (props) => {
             
               {
                 props.options.length > 0 ?
+                // eslint-disable-next-line array-callback-return
                 props.options.map((option,index) => {
                   <option key={index} value={option.value}>{option.name}</option>
                 }) : null
