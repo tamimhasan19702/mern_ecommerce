@@ -1,4 +1,12 @@
-/** @format */
+/**
+ * * title: Input component
+ * * description: this is the primary input * * component that is used in the form
+ * * author: Tareq Monower
+ * *
+ *
+ * @format
+ */
+
 
 import React from "react";
 import { Form } from "react-bootstrap";
@@ -20,6 +28,7 @@ const Input = (props) => {
             
               {
                 props.options.length > 0 ?
+                // eslint-disable-next-line array-callback-return
                 props.options.map((option,index) => {
                   <option key={index} value={option.value}>{option.name}</option>
                 }) : null
