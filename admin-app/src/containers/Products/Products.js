@@ -13,6 +13,7 @@ import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import Input from "../../components/Ui/input/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../actions/product.action";
+import NewModal from "../../components/Ui/model";
 
 export default function Products(props) {
   //taking category values from the redux state
@@ -78,77 +79,73 @@ export default function Products(props) {
         </Row>
       </Container>
 
-      {/* product modal input */}
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Product</Modal.Title>
-        </Modal.Header>
+      {/* adding new modal */}
+      <NewModal
+        show={show}
+        handleClose={handleClose}
+        ModalTitle={"Add New Product"}>
+        <Input
+          label="Name"
+          value={name}
+          placeholder={`Name`}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Input
+          value={quantity}
+          label="Quantity"
+          style={{ marginTop: "20px" }}
+          type={Number}
+          placeholder={`Quantity`}
+          onChange={(e) => setQuantity(e.target.value)}
+        />
+        <Input
+          label="Price"
+          value={price}
+          style={{ marginTop: "20px" }}
+          placeholder={`Price`}
+          onChange={(e) => setPrice(e.target.value)}
+        />
+        <Input
+          label="Description"
+          value={description}
+          style={{ marginTop: "20px" }}
+          placeholder={`Description`}
+          onChange={(e) => setDescription(e.target.value)}
+        />
 
-        <Modal.Body>
-          <Input
-            label="Name"
-            value={name}
-            placeholder={`Name`}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <Input
-            value={quantity}
-            label="Quantity"
-            style={{ marginTop: "20px" }}
-            type={Number}
-            placeholder={`Quantity`}
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-          <Input
-            label="Price"
-            value={price}
-            style={{ marginTop: "20px" }}
-            placeholder={`Price`}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <Input
-            label="Description"
-            value={description}
-            style={{ marginTop: "20px" }}
-            placeholder={`Description`}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+        {/* option selection */}
+        <select
+          className="form-control"
+          style={{ marginTop: "20px" }}
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}>
+          <option>select category</option>
 
-          {/* option selection */}
-          <select
-            className="form-control"
-            style={{ marginTop: "20px" }}
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}>
-            <option>select category</option>
+          {createCategoryList(category.categories).map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select>
 
-            {createCategoryList(category.categories).map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.name}
-              </option>
-            ))}
-          </select>
+        {/* mapping through the productPictures array and display the names in the frontend*/}
+        {productPictures.length > 0
+          ? productPictures.map((pic, index) => (
+              <div key={index}>{pic.name}</div>
+            ))
+          : null}
 
-         {/* mapping through the productPictures array and display the names in the frontend*/}
-          {productPictures.length > 0
-            ? productPictures.map((pic, index) => (
-                <div key={index}>{pic.name}</div>
-              ))
-            : null}
-
-          <Input
-            style={{ marginTop: "20px" }}
-            type="file"
-            name="productPicture"
-            onChange={handleProductPictures}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <Input
+          style={{ marginTop: "20px" }}
+          type="file"
+          name="productPicture"
+          onChange={handleProductPictures}
+        />
+      </NewModal>
     </Layout>
   );
+}
+
+{
+  /*  */
 }
