@@ -9,7 +9,7 @@
 
 import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
-import { Button, Col, Container, Modal, Row } from "react-bootstrap";
+import { Table, Col, Container, Row } from "react-bootstrap";
 import Input from "../../components/Ui/input/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../actions/product.action";
@@ -66,6 +66,39 @@ export default function Products(props) {
     setProductPictures([...productPictures, e.target.files[0]]);
   };
 
+  //redering the products in the frontend
+const renderProducts = () => 
+{
+  return (
+    <Table responsive="sm">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Table heading</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td>1</td>
+        <td>Table cell</td>
+        <td>Table cell</td>
+        <td>Table cell</td>
+        <td>Table cell</td>
+        <td>Table cell</td>
+        <td>Table cell</td>
+      </tr>
+     
+    </tbody>
+  </Table>
+  )
+}
+
   return (
     <Layout sidebar>
       <Container>
@@ -74,6 +107,13 @@ export default function Products(props) {
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h3>Products</h3>
               <button onClick={handleShow}>Add</button>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div>
+             {renderProducts()}
             </div>
           </Col>
         </Row>
@@ -144,8 +184,4 @@ export default function Products(props) {
       </NewModal>
     </Layout>
   );
-}
-
-{
-  /*  */
 }
