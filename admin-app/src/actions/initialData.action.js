@@ -8,11 +8,17 @@
  */
 
 import axios from "../helpers/axios";
-import { categoryConstants } from "./constants";
+import {
+  initialDataConstants,
+  categoryConstants,
+  productConstants,
+} from "./constants";
 
 export const getInitialData = () => {
   return async (dispatch) => {
+
     const res = await axios.post("/initialData");
+    
     if (res.status === 200) {
       const { categories, products } = res.data;
       dispatch({
@@ -20,7 +26,7 @@ export const getInitialData = () => {
         payload: { categories },
       });
       dispatch({
-        type: categoryConstants.GET_ALL_PRODUCTS_REQUEST,
+        type: productConstants.GET_ALL_PRODUCTS_REQUEST,
         payload: { products },
       });
     }

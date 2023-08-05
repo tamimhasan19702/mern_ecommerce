@@ -18,6 +18,7 @@ import NewModal from "../../components/Ui/model";
 export default function Products(props) {
   //taking category values from the redux state
   const category = useSelector((state) => state.category);
+  const product = useSelector((state) => state.product);
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -52,14 +53,17 @@ export default function Products(props) {
 
   const createCategoryList = (categories, options = []) => {
     for (let category of categories) {
+      
       options.push({ value: category._id, name: category.name });
-      if (category.children.length > 0) {
+
+      if (category.children?.length > 0) {
         createCategoryList(category.children, options);
       }
     }
 
     return options;
   };
+
 
   //handeling product puctures in a array
   const handleProductPictures = (e) => {
