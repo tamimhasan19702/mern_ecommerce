@@ -87,7 +87,7 @@ exports.signin = (req, res) => {
         const { _id, firstName, lastName, email, role, fullName } = user;
 
         // sending cookies with response to expire token after 1 day 
-        res.cookie("token", token, { expiresIn: "1d" });
+        res.cookie("token", token, { expiresIn: "30d" });
         
         // sending user response
         res.status(200).json({

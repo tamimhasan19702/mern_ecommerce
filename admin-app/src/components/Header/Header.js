@@ -27,7 +27,7 @@ export default function Header(props) {
     return (
       <Nav>
         <li className="nav-item">
-          <span className="nav-link" onClick={logout}>
+          <span className="nav-link" onClick={() => logout()}>
             SignOut
           </span>
         </li>

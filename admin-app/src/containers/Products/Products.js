@@ -18,6 +18,7 @@ import NewModal from "../../components/Ui/model";
 export default function Products(props) {
   //taking category values from the redux state
   const category = useSelector((state) => state.category);
+  const product = useSelector((state) => state.product);
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -53,7 +54,8 @@ export default function Products(props) {
   const createCategoryList = (categories, options = []) => {
     for (let category of categories) {
       options.push({ value: category._id, name: category.name });
-      if (category.children.length > 0) {
+
+      if (category.children?.length > 0) {
         createCategoryList(category.children, options);
       }
     }
@@ -67,37 +69,39 @@ export default function Products(props) {
   };
 
   //redering the products in the frontend
-const renderProducts = () => 
-{
-  return (
-    <Table responsive="sm">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Description</th>
-        <th>Category</th>
-        <th>Table heading</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-      <tr>
-        <td>1</td>
-        <td>Table cell</td>
-        <td>Table cell</td>
-        <td>Table cell</td>
-        <td>Table cell</td>
-        <td>Table cell</td>
-        <td>Table cell</td>
-      </tr>
-     
-    </tbody>
-  </Table>
-  )
-}
+  const renderProducts = () => {
+    return (
+      <Table responsive="sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Table heading</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {product.products.length > 0
+            ? product.products.map((product) => (
+                <tr key={product._id}>
+                  <td>1</td>
+                  <td>{product.name}</td>
+                  <td>{product.price}</td>
+                  <td>{product.quantity}</td>
+                  <td>{product.description}</td>
+                  <td>--</td>
+                </tr>
+              ))
+            : null}
+
+        </tbody>
+      </Table>
+    );
+  };
 
   return (
     <Layout sidebar>
@@ -112,9 +116,7 @@ const renderProducts = () =>
         </Row>
         <Row>
           <Col>
-            <div>
-             {renderProducts()}
-            </div>
+            <div>{renderProducts()}</div>
           </Col>
         </Row>
       </Container>
