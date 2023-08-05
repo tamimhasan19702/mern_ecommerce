@@ -15,21 +15,24 @@ import Signin from "./containers/Signin/Signin";
 import Signup from "./containers/Signup/Signup";
 import PrivateRoute from "./components/HOC/PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategory, isUserLoggedIn } from "./actions";
+import { isUserLoggedIn,getInitialData  } from "./actions";
 import Products from "./containers/Products/Products";
 import Orders from "./containers/Orders/Orders";
 import Category from "./containers/category/Category";
+
 
 //App function
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
+  //calling this function to get all the initialData to the frontend first
   useEffect(() => {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
     }
-    dispatch(getAllCategory())
+    dispatch(getInitialData())
+
   }, [auth.authenticate, dispatch]);
 
   return (
