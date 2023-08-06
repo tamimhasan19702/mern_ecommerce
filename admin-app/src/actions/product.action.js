@@ -11,7 +11,7 @@ import axios from "../helpers/axios";
 import { productConstants } from "./constants";
 
 //getting product from the backend with this async action
-const getProducts = () => {
+export const getProducts = () => {
   return async (dispatch) => {
     try {
       dispatch({ type: productConstants.GET_ALL_PRODUCTS_REQUEST });
