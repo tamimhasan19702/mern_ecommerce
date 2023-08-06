@@ -7,7 +7,7 @@
 
 const express = require("express");
 const { requireSignin, adminMiddleware } = require("../common-middlewires");
-const { createProduct } = require("../controller/product");
+const { createProduct, getProducts } = require("../controller/product");
 const multer = require("multer");
 const router = express.Router();
 const shortId = require("shortid");
@@ -35,5 +35,7 @@ router.post(
   upload.array("productPicture"),
   createProduct
 );
+
+
 
 module.exports = router;
