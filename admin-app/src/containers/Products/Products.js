@@ -84,7 +84,6 @@ export default function Products(props) {
           </tr>
         </thead>
         <tbody>
-
           {product.products.length > 0
             ? product.products.map((product) => (
                 <tr key={product._id}>
@@ -97,31 +96,14 @@ export default function Products(props) {
                 </tr>
               ))
             : null}
-
         </tbody>
       </Table>
     );
   };
 
-  return (
-    <Layout sidebar>
-      <Container>
-        <Row>
-          <Col md={12}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h3>Products</h3>
-              <button onClick={handleShow}>Add</button>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div>{renderProducts()}</div>
-          </Col>
-        </Row>
-      </Container>
-
-      {/* adding new modal */}
+  const renderAddProductModal = () => {
+    return (
+      // adding new model to the product
       <NewModal
         show={show}
         handleClose={handleClose}
@@ -184,6 +166,28 @@ export default function Products(props) {
           onChange={handleProductPictures}
         />
       </NewModal>
+    );
+  };
+
+  return (
+    <Layout sidebar>
+      <Container>
+        <Row>
+          <Col md={12}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h3>Products</h3>
+              <button onClick={handleShow}>Add</button>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div>{renderProducts()}</div>
+          </Col>
+        </Row>
+      </Container>
+
+      {renderAddProductModal()}
     </Layout>
   );
 }
