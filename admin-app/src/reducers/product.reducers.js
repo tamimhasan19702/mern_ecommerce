@@ -10,26 +10,27 @@
 import { productConstants } from "../actions/constants";
 
 const initState = {
-    products: []
-}
-
+  products: [],
+  loading: false,
+  error: null,
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initState, action) => {
-    // eslint-disable-next-line default-case
-    switch(action.type){
-        case productConstants.GET_ALL_PRODUCTS_SUCCESS:
-          
-            state = {
-                ...state,
-                products: action.payload.products
-            }
-            console.log(state)
-            break;
-    }
+  // eslint-disable-next-line default-case
+  switch (action.type) {
+    // eslint-disable-next-line no-duplicate-case
+    case productConstants.GET_ALL_PRODUCTS_SUCCESS:
+      state = {
+        ...state,
+        products: action.payload.products
+      };
 
-    return state;
-}
+      break;
+  }
+  console.log(state);
 
+  return state;
+};

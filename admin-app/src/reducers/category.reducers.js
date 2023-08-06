@@ -21,7 +21,7 @@ export default (state = initState, action) => {
   // eslint-disable-next-line default-case
   switch (action.type) {
     //getting all the categoris success request and sending categories as payload
-    case categoryConstants.GET_All_CATEGORIES_SUCCESS:
+    case categoryConstants.GET_ALL_CATEGORIES_SUCCESS:
       state = {
         ...state,
         categories: action.payload.categories,
@@ -59,7 +59,7 @@ export default (state = initState, action) => {
       };
       break;
   }
-
+  console.log(state);
   //returning the state after all the actions
   return state;
 };
