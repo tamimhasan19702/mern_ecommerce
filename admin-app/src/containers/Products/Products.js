@@ -26,6 +26,7 @@ export default function Products(props) {
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [productPictures, setProductPictures] = useState("");
+  const [pro]
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -167,6 +168,16 @@ export default function Products(props) {
         />
       </NewModal>
     );
+  };
+
+  const renderProductDetailsModal = () => {
+    return( 
+    <NewModal
+    show={show}
+    handleClose={}
+    ModalTitle={"Product details"}>
+
+    </NewModal>)
   };
 
   return (
