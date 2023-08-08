@@ -26,7 +26,7 @@ export default function Products(props) {
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [productPictures, setProductPictures] = useState("");
-  const [pro]
+  const [productDetailModal, setProductDetailModal] = useState(false);
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -79,7 +79,6 @@ export default function Products(props) {
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
-            <th>Description</th>
             <th>Category</th>
             <th>Table heading</th>
           </tr>
@@ -87,12 +86,11 @@ export default function Products(props) {
         <tbody>
           {product.products.length > 0
             ? product.products.map((product) => (
-                <tr key={product._id}>
+                <tr key={product._id} onClick={() => showProductDetailModal(product)}>
                   <td>1</td>
                   <td>{product.name}</td>
                   <td>{product.price}</td>
                   <td>{product.quantity}</td>
-                  <td>{product.description}</td>
                   <td>--</td>
                 </tr>
               ))
@@ -101,6 +99,11 @@ export default function Products(props) {
       </Table>
     );
   };
+
+  const showProductDetailModal = (product) => {
+    setProductDetailModal(true)
+    console.log(product)
+  }
 
   const renderAddProductModal = () => {
     return (
@@ -170,14 +173,20 @@ export default function Products(props) {
     );
   };
 
-  const renderProductDetailsModal = () => {
-    return( 
-    <NewModal
-    show={show}
-    handleClose={}
-    ModalTitle={"Product details"}>
+  const handleCloseProductDetailModal = () => {
+    setProductDetailModal(false)
+  };
 
-    </NewModal>)
+  const renderProductDetailsModal = () => {
+    return (
+      <NewModal
+        show={productDetailModal}
+        handleClose={handleCloseProductDetailModal}
+        ModalTitle={"Product details"}
+        size="lg">
+
+        </NewModal>
+    );
   };
 
   return (
