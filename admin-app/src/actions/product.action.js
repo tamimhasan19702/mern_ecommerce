@@ -16,6 +16,7 @@ const getProducts = () => {
     try {
       dispatch({ type: productConstants.GET_ALL_PRODUCTS_REQUEST });
       const res = await axios.post(`product/getProducts`);
+      console.log(res)
       if (res.status === 200) {
         const { products } = res.data;
         dispatch({
@@ -31,25 +32,21 @@ const getProducts = () => {
   };
 };
 
-//adding product from the backend
+
+// modified actrion
 export const addProduct = (form) => {
   return async (dispatch) => {
-    //dispatching product add request
-    dispatch({ type: productConstants.ADD_PRODUCT_REQUEST });
     try {
-      //expecting a form in the this function argument a with the product/create route
+      dispatch({ type: productConstants.ADD_PRODUCT_REQUEST });
       const res = await axios.post(`product/create`, form);
-
-      //if response status code is 201 then return this process request and also dispatch getProducts function
       if (res.status === 201) {
         dispatch({ type: productConstants.ADD_PRODUCT_SUCCESS });
         dispatch(getProducts());
       } else {
-        //if response failed then response this request
         dispatch({ type: productConstants.ADD_PRODUCT_FAILURE });
       }
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   };
 };

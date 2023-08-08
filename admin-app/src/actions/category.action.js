@@ -27,13 +27,13 @@ export const getAllCategory = () => {
 
       //category success action with categoryList payload
       dispatch({
-        type: categoryConstants.GET_All_CATEGORIES_SUCCESS,
+        type: categoryConstants.GET_ALL_CATEGORIES_SUCCESS,
         payload: { categories: categoryList },
       });
     } else {
       //if there's error in getting category send dispatch and payload as error
       dispatch({
-        type: categoryConstants.GET_All_CATEGORIES_FAILURE,
+        type: categoryConstants.GET_ALL_CATEGORIES_FAILURE,
         payload: { error: res.data.error },
       });
     }
@@ -44,7 +44,7 @@ export const getAllCategory = () => {
 export const addCategory = (form) => {
   return async (dispatch) => {
     //dispatching add new category request
-    dispatch({ type: categoryConstants.ADD_NEW_CATEGORY_REQUEST });
+    dispatch({ type: categoryConstants.ADD_NEW_CATEGORY_REQUEST});
 
     try {
       //post request with the axios with the form data as argument

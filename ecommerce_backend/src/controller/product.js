@@ -10,10 +10,9 @@ const shortId = require("shortid");
 const slugify = require("slugify");
 
 exports.createProduct = (req, res) => {
-
   //destructuring and taking values from the request body
   const { name, price, description, category, quantity, createdBy } = req.body;
-  
+
   //blank array
   let productPictures = [];
 
@@ -37,16 +36,23 @@ exports.createProduct = (req, res) => {
   });
 
   //saving the response to the database
-  product.save(((error,product) => {
-
+  product.save((error, product) => {
     //retrun error if there's any error left
-    if(error) return res.status(400).json({ error });
+    if (error) return res.status(400).json({ error });
 
-    //return product response and 
-    if(product){
-      res.status(201).json({ product ,files: req.files});
+    //return product response and
+    if (product) {
+      res.status(201).json({ product, files: req.files });
     }
-  }));
-
-
+  });
 };
+
+// //getting all the categories from the database
+// exports.getProducts = async (req, res) => {
+//   const products = await Product.find({ createdBy: req.user._id })
+//     .select("_id name price quantity slug description productPictures category")
+//     .populate({ path: "category", select: "_id name" })
+//     .exec();
+
+//   res.status(200).json({ products });
+// };

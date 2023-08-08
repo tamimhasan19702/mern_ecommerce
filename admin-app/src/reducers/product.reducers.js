@@ -9,22 +9,28 @@
 
 import { productConstants } from "../actions/constants";
 
-const initialState = {
-    products: []
-}
-
+const initState = {
+  products: [],
+  loading: false,
+  error: null,
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (state = initialState, action) => {
-    // eslint-disable-next-line default-case
-    switch(action.type){
-        case productConstants.GET_ALL_PRODUCTS_SUCCESS:
-            state = {
-                ...state,
-                products: action.payload.products
-            }
-            break;
-    }
 
-    return state;
-}
+// eslint-disable-next-line import/no-anonymous-default-export
+export default (state = initState, action) => {
+  // eslint-disable-next-line default-case
+  switch (action.type) {
+    // eslint-disable-next-line no-duplicate-case
+    case productConstants.GET_ALL_PRODUCTS_SUCCESS:
+      state = {
+        ...state,
+        products: action.payload.products
+      };
+
+      break;
+  }
+  console.log(state);
+
+  return state;
+};
