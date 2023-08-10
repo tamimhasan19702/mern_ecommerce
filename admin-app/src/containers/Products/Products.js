@@ -217,6 +217,16 @@ export default function Products(props) {
        </Col> 
       </Row>
 
+     <Row>
+      <Col>
+    
+      {productDetails.productPictures.map(picture => {
+        <diV>
+          {console.log(picture)}
+        </diV>
+      })}
+      </Col>
+     </Row>
 
       </NewModal>
     );

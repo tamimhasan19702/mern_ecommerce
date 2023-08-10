@@ -59,7 +59,6 @@ export default (state = initState, action) => {
       };
       break;
   }
-  console.log(state);
   //returning the state after all the actions
   return state;
 };

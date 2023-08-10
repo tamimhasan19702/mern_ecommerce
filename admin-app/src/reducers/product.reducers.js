@@ -30,7 +30,6 @@ export default (state = initState, action) => {
 
       break;
   }
-  console.log(state);
 
   return state;
 };
