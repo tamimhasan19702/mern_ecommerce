@@ -36,6 +36,13 @@ router.post(
   createProduct
 );
 
+router.post(
+  "/product/getProducts",
+  requireSignin,
+  adminMiddleware,
+  getProducts
+);
+
 
 
 module.exports = router;

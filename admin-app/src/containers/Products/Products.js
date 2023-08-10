@@ -25,7 +25,7 @@ export default function Products(props) {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
-  const [productPictures, setProductPictures] = useState("");
+  const [productPicture, setProductPicture] = useState("");
   const [productDetailModal, setProductDetailModal] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ export default function Products(props) {
     form.append("category", category);
 
     //setting up each product and appending them in the array
-    for (let pic of productPictures) {
+    for (let pic of productPicture) {
       form.append("productPicture", pic);
     }
     //dispatching the add product action with the new  form object
@@ -67,7 +67,7 @@ export default function Products(props) {
 
   //handeling product puctures in a array
   const handleProductPictures = (e) => {
-    setProductPictures([...productPictures, e.target.files[0]]);
+    setProductPicture([...productPicture, e.target.files[0]]);
   };
 
   //redering the products in the frontend
@@ -160,8 +160,8 @@ export default function Products(props) {
         </select>
 
         {/* mapping through the productPictures array and display the names in the frontend*/}
-        {productPictures.length > 0
-          ? productPictures.map((pic, index) => (
+        {productPicture.length > 0
+          ? productPicture.map((pic, index) => (
               <div key={index}>{pic.name}</div>
             ))
           : null}
@@ -219,10 +219,12 @@ export default function Products(props) {
 
      <Row>
       <Col>
+
+      
     
       {productDetails.productPictures.map(picture => {
         <diV>
-          {console.log(picture)}
+         {console.log(picture)}
         </diV>
       })}
       </Col>
