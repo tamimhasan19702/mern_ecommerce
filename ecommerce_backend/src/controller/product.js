@@ -47,6 +47,7 @@ exports.createProduct = (req, res) => {
   });
 };
 
+
 // //getting all the categories from the database
 // exports.getProducts = async (req, res) => {
 //   const products = await Product.find({ createdBy: req.user._id })
