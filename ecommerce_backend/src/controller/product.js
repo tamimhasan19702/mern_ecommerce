@@ -19,7 +19,7 @@ exports.createProduct = (req, res) => {
   //pushing all the productPicture images that were saved in the multer files to blank array
   if (req.files.length > 0) {
     productPictures = req.files.map((file) => {
-      return { img: file.location };
+      return { img: file.filename };
     });
   }
 
@@ -36,7 +36,7 @@ exports.createProduct = (req, res) => {
   });
 
   //saving the response to the database
-  product.save((error, product) => {
+  product.save(((error, product) => {
     //retrun error if there's any error left
     if (error) return res.status(400).json({ error });
 
@@ -44,7 +44,8 @@ exports.createProduct = (req, res) => {
     if (product) {
       res.status(201).json({ product, files: req.files });
     }
-  });
+
+  }));
 
 
 };
