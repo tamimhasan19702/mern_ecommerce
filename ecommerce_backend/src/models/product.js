@@ -32,7 +32,7 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
     offer: { type: Number },
-    productPictures: [{ img: { type: String, ref: "img" } }],
+    productPictures: [{ img: { type: String } }],
     reviews: [
       {
         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
@@ -42,7 +42,7 @@ const productSchema = new mongoose.Schema(
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
+      required:true,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
