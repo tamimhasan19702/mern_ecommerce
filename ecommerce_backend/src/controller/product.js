@@ -11,7 +11,7 @@ const slugify = require("slugify");
 
 exports.createProduct = (req, res) => {
   //destructuring and taking values from the request body
-  const { name, price, description, category, quantity, createdBy } = req.body;
+  const { name, price, description ,category, quantity, createdBy } = req.body;
 
   //blank array
   let productPictures = [];
@@ -19,7 +19,6 @@ exports.createProduct = (req, res) => {
   //pushing all the productPicture images that were saved in the multer files to blank array
   if (req.files.length > 0) {
     productPictures = req.files.map((file) => {
-      console.log(file.location)
       return { img: file.location };
     });
   }
@@ -46,6 +45,8 @@ exports.createProduct = (req, res) => {
       res.status(201).json({ product, files: req.files });
     }
   });
+
+
 };
 
 

@@ -210,26 +210,20 @@ export default function Products(props) {
           </Col>
         </Row>
 
-      <Row>
-      <Col md="12">
+        <Row>
+          <Col md="12">
             <label className="key">Description</label>
             <p className="value">{productDetails.description}</p>
-       </Col> 
-      </Row>
+          </Col>
+        </Row>
 
-     <Row>
-      <Col>
-
-      
-    
-      {productDetails.productPictures.map(picture => {
-        <diV>
-         {console.log(picture)}
-        </diV>
-      })}
-      </Col>
-     </Row>
-
+        <Row>
+          <Col>
+            {productDetails.productPictures.map((picture) => {
+              return <diV>{console.log(picture)}</diV>;
+            })}
+          </Col>
+        </Row>
       </NewModal>
     );
   };
