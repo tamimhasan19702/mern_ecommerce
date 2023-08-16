@@ -56,7 +56,7 @@ export default (state = initState, action) => {
     //* if the action type is Logout request and the change the user state according to this
     case authConstants.LOGOUT_REQUEST:
       state = {
-        ...initState,
+        ...state,
         loading: true,
       };
       break;

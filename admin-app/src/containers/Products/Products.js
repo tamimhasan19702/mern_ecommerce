@@ -166,7 +166,7 @@ export default function Products(props) {
           style={{ marginTop: "20px" }}
           type="file"
           name="productPicture"
-          onChange={(e) => handleProductPictures()}
+          onChange={ handleProductPictures}
         />
       </NewModal>
     );
