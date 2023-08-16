@@ -142,6 +142,7 @@ const renderProducts = () => {
                 <td>{product.name}</td> 
                 <td>{product.price}</td> 
                 <td>{product.quantity}</td> 
+                <td>{product.category.name}</td> 
                 <td>--</td> 
               </tr>
             ))
@@ -289,7 +290,7 @@ const renderProductDetailsModal = () => {
         </Col>
         <Col md="6">
           <label className="key">Category</label>
-          <p className="value">--</p>
+          <p className="value">{productDetails.category.name}</p>
         </Col>
       </Row>
 
