@@ -19,13 +19,14 @@ export default function Products(props) {
   //taking category values from the redux state
   const category = useSelector((state) => state.category);
   const product = useSelector((state) => state.product);
+
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
-  const [productPicture, setProductPicture] = useState("");
+  const [productPictures, setProductPictures] = useState("");
   const [productDetailModal, setProductDetailModal] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
   const dispatch = useDispatch();
@@ -37,10 +38,10 @@ export default function Products(props) {
     form.append("quantity", quantity);
     form.append("price", price);
     form.append("description", description);
-    form.append("category", category);
+    form.append("category", categoryId);
 
     //setting up each product and appending them in the array
-    for (let pic of productPicture) {
+    for (let pic of productPictures) {
       form.append("productPicture", pic);
     }
     //dispatching the add product action with the new  form object
@@ -67,7 +68,7 @@ export default function Products(props) {
 
   //handeling product puctures in a array
   const handleProductPictures = (e) => {
-    setProductPicture([...productPicture, e.target.files[0]]);
+    setProductPictures([...productPictures, e.target.files[0]]);
   };
 
   //redering the products in the frontend
@@ -101,11 +102,6 @@ export default function Products(props) {
         </tbody>
       </Table>
     );
-  };
-
-  const showProductDetailModal = (product) => {
-    setProductDetails(product);
-    setProductDetailModal(true);
   };
 
   const renderAddProductModal = () => {
@@ -151,7 +147,6 @@ export default function Products(props) {
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}>
           <option>select category</option>
-
           {createCategoryList(category.categories).map((option) => (
             <option key={option.value} value={option.value}>
               {option.name}
@@ -160,8 +155,8 @@ export default function Products(props) {
         </select>
 
         {/* mapping through the productPictures array and display the names in the frontend*/}
-        {productPicture.length > 0
-          ? productPicture.map((pic, index) => (
+        {productPictures.length > 0
+          ? productPictures.map((pic, index) => (
               <div key={index}>{pic.name}</div>
             ))
           : null}
@@ -174,6 +169,11 @@ export default function Products(props) {
         />
       </NewModal>
     );
+  };
+
+  const showProductDetailModal = (product) => {
+    setProductDetails(product);
+    setProductDetailModal(true);
   };
 
   const handleCloseProductDetailModal = () => {
@@ -219,9 +219,14 @@ export default function Products(props) {
 
         <Row>
           <Col>
-            {productDetails.productPictures.map((picture) => {
-              return <diV>{console.log(picture)}</diV>;
-            })}
+            <label className="key">Product Pictures</label>
+            <div style={{ display: "flex" }}>
+              {productDetails.productPictures.map((picture) => (
+                <div className="productImgContainer">
+                  <img src={`http://localhost:3000/public/${picture.img}`} alt="" />
+                </div>
+              ))}
+            </div>
           </Col>
         </Row>
       </NewModal>

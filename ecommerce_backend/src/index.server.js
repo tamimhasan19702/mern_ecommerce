@@ -46,7 +46,7 @@ app.use(express.json());
 
 //declaring a static route with this middlewire backend 
 app.use("/public", express.static(path.join(__dirname, "uploads")));
-
+console.log(__dirname)
 //importing all the api routes
 app.use("/api", authRoutes);
 app.use("/api", adminRoutes);
