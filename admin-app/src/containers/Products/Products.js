@@ -15,6 +15,9 @@ import Input from "../../components/Ui/input/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../actions";
 import NewModal from "../../components/Ui/model";
+import './style.css'
+import { generatePublicUrl } from "../../urlConfig";
+
 
 /**
  * Renders the Products component.
@@ -118,12 +121,12 @@ const renderProducts = () => {
     <Table style={{ fontSize: 12 }} responsive="sm">
       <thead>
         <tr>
-          <th>#</th> // Table header for product number
-          <th>Name</th> // Table header for product name
-          <th>Price</th> // Table header for product price
-          <th>Quantity</th> // Table header for product quantity
-          <th>Category</th> // Table header for product category
-          <th>Table heading</th> // Table header for generic table heading
+          <th>#</th> 
+          <th>Name</th> 
+          <th>Price</th> 
+          <th>Quantity</th> 
+          <th>Category</th> 
+          <th>Actions</th> 
         </tr>
       </thead>
       <tbody>
@@ -135,14 +138,14 @@ const renderProducts = () => {
                 key={product._id}
                 onClick={() => showProductDetailModal(product)}
               >
-                <td>1</td> // Product number
-                <td>{product.name}</td> // Product name
-                <td>{product.price}</td> // Product price
-                <td>{product.quantity}</td> // Product quantity
-                <td>--</td> // Product category placeholder
+                <td>1</td> 
+                <td>{product.name}</td> 
+                <td>{product.price}</td> 
+                <td>{product.quantity}</td> 
+                <td>--</td> 
               </tr>
             ))
-          : // No products, render nothing
+          : 
             null}
       </tbody>
     </Table>
@@ -306,7 +309,7 @@ const renderProductDetailsModal = () => {
             {/* Map over the product pictures and render each picture */}
             {productDetails.productPictures.map((picture) => (
               <div className="productImgContainer">
-                <img src={`http://localhost:3000/public/${picture.img}`} alt="" />
+                <img src={generatePublicUrl(picture.img)} alt="" />
               </div>
             ))}
           </div>
