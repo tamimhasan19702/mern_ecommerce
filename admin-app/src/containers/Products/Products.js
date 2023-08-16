@@ -146,7 +146,6 @@ export default function Products(props) {
           style={{ marginTop: "20px" }}
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}>
-
           <option>select category</option>
           {createCategoryList(category.categories).map((option) => (
             <option key={option.value} value={option.value}>
@@ -166,7 +165,7 @@ export default function Products(props) {
           style={{ marginTop: "20px" }}
           type="file"
           name="productPicture"
-          onChange={ handleProductPictures}
+          onChange={handleProductPictures}
         />
       </NewModal>
     );
@@ -176,7 +175,6 @@ export default function Products(props) {
     setProductDetails(product);
     setProductDetailModal(true);
   };
-
 
   const handleCloseProductDetailModal = () => {
     setProductDetailModal(false);
@@ -221,11 +219,14 @@ export default function Products(props) {
 
         <Row>
           <Col>
-            {productDetails.productPictures.map((picture) => {
-              return( <diV>
-                 <p>text</p>
-              </diV>)
-            })}
+            <label className="key">Product Pictures</label>
+            <div style={{ display: "flex" }}>
+              {productDetails.productPictures.map((picture) => (
+                <div className="productImgContainer">
+                  <img src={`http://localhost:3000/public/${picture.img}`} alt="" />
+                </div>
+              ))}
+            </div>
           </Col>
         </Row>
       </NewModal>
