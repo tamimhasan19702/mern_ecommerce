@@ -10,9 +10,7 @@
 import { productConstants } from "../actions/constants";
 
 const initState = {
-  products: [],
-  loading: false,
-  error: null,
+  products: []
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

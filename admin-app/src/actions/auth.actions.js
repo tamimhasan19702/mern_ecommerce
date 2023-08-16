@@ -1,6 +1,6 @@
 /**
  * * title: auth.action js file
- * * description: this file is to hold all the necessary authentication action 
+ * * description: this file is to hold all the necessary authentication action
  * * author: Tareq Monower
  * *
  *
@@ -13,6 +13,8 @@ import axios from "../helpers/axios";
 
 // auth login function for the user
 export const login = (user) => {
+
+  console.log(user)
   // dispatching an login action
   return async (dispatch) => {
     //dispatch takes an object with a type and payload for argument
@@ -79,29 +81,23 @@ export const isUserLoggedIn = () => {
 
 // signing out function for the user
 export const signout = () => {
-  
   return async (dispatch) => {
     //dispatching logout request
     dispatch({ type: authConstants.LOGOUT_REQUEST });
-   
-    try{
 
-      const res = await axios.post(`/admin/signout`);
-  
-      //if response success
-      if (res.status === 200) {
-        localStorage.clear();
-        //dispatching logout success
-        dispatch({ type: authConstants.LOGOUT_SUCCESS });
-      } else {
-        //dispatching logout failure
-        dispatch({
-          type: authConstants.LOGOUT_FAILURE,
-          payload: { error: res.data.error },
-        });
-      }
-    }catch(error){
-      console.log(error.message)
+    const res = await axios.post(`/admin/signout`);
+
+    //if response success
+    if (res.status === 200) {
+      localStorage.clear();
+      //dispatching logout success
+      dispatch({ type: authConstants.LOGOUT_SUCCESS });
+    } else {
+      //dispatching logout failure
+      dispatch({
+        type: authConstants.LOGOUT_FAILURE,
+        payload: { error: res.data.error },
+      });
     }
   };
 };
