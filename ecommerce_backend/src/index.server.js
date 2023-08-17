@@ -19,7 +19,7 @@ const adminRoutes = require("./routes/admin/auth");
 const categoryRoutes = require("./routes/category");
 const productRoutes = require("./routes/product");
 const cartRoutes = require("./routes/cart");
-const initialDataRoutes = require('./routes/admin/initialData')
+const initialDataRoutes = require("./routes/admin/initialData");
 
 //adding environment variables
 env.config();
@@ -41,12 +41,12 @@ mongoose
 mongoose.set("useFindAndModify", false);
 
 //importing all the middlewires here
-app.use(cors());//using this call this api from anywhere in the localhost
+app.use(cors()); //using this call this api from anywhere in the localhost
 app.use(express.json());
 
-//declaring a static route with this middlewire backend 
+//declaring a static route with this middlewire backend
 app.use("/public", express.static(path.join(__dirname, "uploads")));
-console.log(__dirname)
+console.log(__dirname);
 //importing all the api routes
 app.use("/api", authRoutes);
 app.use("/api", adminRoutes);
