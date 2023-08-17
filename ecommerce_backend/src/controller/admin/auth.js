@@ -10,105 +10,107 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const shortid = require("shortid");
 
-//admin signup controller function
-exports.signup = (req, res) => {
 
-  // finding if admin already exist in the database or not
-  User.findOne({ email: req.body.email }).exec(async (error, user) => {
-    if (user)
+// admin signup controller function
+exports.signup = async (req, res) => {
+  try {
+    // Check if admin already exists in the database
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
       return res.status(400).json({
         message: "Admin already registered",
       });
+    }
 
-    User.estimatedDocumentCount(async (err, count) => {
-      if (err) return res.status(400).json({ error });
-      let role = "admin";
-      if (count === 0) {
-        role = "super-admin";
-      }
-       
-      // taking the admin signup request from the client
-      const { firstName, lastName, email, password } = req.body;
-      
-      //hashing password
-      const hash_password = await bcrypt.hash(password, 10);
+    // Count the number of users in the database
+    const count = await User.estimatedDocumentCount();
+    let role = "admin";
+    if (count === 0) {
+      role = "super-admin";
+    }
 
-      const _user = new User({
-        firstName,
-        lastName,
-        email,
-        hash_password,
-        username: shortid.generate(),
-        role,
-      });
+    // Extract admin signup request from the client
+    const { firstName, lastName, email, password } = req.body;
 
-      _user.save((error, data) => {
-        if (error) {
-          return res.status(400).json({
-            message: "Something went wrong",
-          });
-        }
+    // Hash the password
+    const hash_password = await bcrypt.hash(password, 10);
 
-        if (data) {
-          return res.status(201).json({
-            message: "Admin created Successfully..!",
-          });
-        }
-      });
+    // Create a new user object
+    const _user = new User({
+      firstName,
+      lastName,
+      email,
+      hash_password,
+      username: shortid.generate(),
+      role,
     });
-  });
+
+    // Save the user object to the database
+    const data = await _user.save();
+    if (data) {
+      return res.status(201).json({
+        message: "Admin created successfully",
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      message: "Something went wrong",
+    });
+  }
 };
 
-//admin signin controller function
-exports.signin = (req, res) => {
 
-  // looking through the user with request body email
-  User.findOne({ email: req.body.email }).exec(async (error, user) => {
+// This function handles the sign-in process for admin users
+exports.signin = async (req, res) => {
+  try {
+    // Find the user with the provided email address
+    const user = await User.findOne({ email: req.body.email }).exec();
 
-    // if error found after execution call this
-    if (error) return res.status(400).json({ error });
-    
-    // if user found call this
-    if (user) {
-
-      //checking if password right or wrong
-      const isPassword = await user.authenticate(req.body.password);
-
-      if (isPassword && (user.role === "admin" || user.role === "super-admin")) {
-        
-        // creating separate token creaential for admin and super admin
-        const token = jwt.sign(
-          { _id: user._id, role: user.role },
-          process.env.JWT_SECRET,
-          { expiresIn: "1d" }
-        );
-
-        //destructuring the values from the user
-        const { _id, firstName, lastName, email, role, fullName } = user;
-
-        // sending cookies with response to expire token after 1 day 
-        res.cookie("token", token, { expiresIn: "30d" });
-        
-        // sending user response
-        res.status(200).json({
-          token,
-          user: { _id, firstName, lastName, email, role, fullName },
-        });
-
-      } else {
-        return res.status(400).json({
-          message: "Invalid Password",
-        });
-      }
-    } else {
+    // If no user is found, return an error response
+    if (!user) {
       return res.status(400).json({ message: "Something went wrong" });
     }
-  });
+
+    // Check if the password provided is correct
+    const isPasswordCorrect = await user.authenticate(req.body.password);
+
+    if (isPasswordCorrect && (user.role === "admin" || user.role === "super-admin")) {
+      // Generate a token with the user's ID and role
+      const token = jwt.sign(
+        { _id: user._id, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: "1d" }
+      );
+
+      // Extract relevant user information
+      const { _id, firstName, lastName, email, role, fullName } = user;
+
+      // Set the token as a cookie with a 30-day expiration
+      res.cookie("token", token, { expiresIn: "30d" });
+
+      // Send a success response with the token and user information
+      res.status(200).json({
+        token,
+        user: { _id, firstName, lastName, email, role, fullName },
+      });
+    } else {
+      // Return an error response if the password is incorrect
+      return res.status(400).json({
+        message: "Invalid Password",
+      });
+    }
+  } catch (error) {
+    // Return an error response if an error occurs during execution
+    return res.status(400).json({ error });
+  }
 };
 
 //admin signout function created to clear the admin token cookie
 exports.signout = (req, res) => {
+  // Clear the token cookie
   res.clearCookie("token");
+
+  // Send a success response with a message
   res.status(200).json({
     message: "Signout successfully...!",
   });
