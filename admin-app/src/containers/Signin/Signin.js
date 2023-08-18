@@ -20,6 +20,7 @@ import { Redirect } from "react-router-dom";
 function Signin(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
 
   //taking the auth state from the redux store
