@@ -24,6 +24,7 @@ export default function Category() {
   const [categoryName, setCategoryName] = useState("");
   const [parentCategoryId, setParentCategoryId] = useState("");
   const [categoryImage, setCategoryImage] = useState("");
+  const [formData, setFormData] = useState({});
 
   //rendering the categories in the frontend with this function
   const renderCategories = (categories) => {
@@ -66,6 +67,7 @@ export default function Category() {
     dispatch(addCategory(form));
 
     setShow(false);
+    setFormData({});
   };
 
   //creating new category list with it

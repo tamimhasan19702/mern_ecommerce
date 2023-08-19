@@ -53,7 +53,7 @@ export default function Products(props) {
    */
   const handleClose = () => {
     // Create a new FormData object to store the form data.
-    const form = new FormData();
+     const form = new FormData();
 
     // Append the name, quantity, price, description, and category to the form data.
     form.append("name", name);
