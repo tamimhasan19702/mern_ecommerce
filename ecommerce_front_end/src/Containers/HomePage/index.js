@@ -5,14 +5,12 @@
  */
 
 import React from 'react'
-import Header from '../../Components/Header'
-import MenuHeader from '../../Components/MenuHeader'
+import Layout from '../../Components/Layout'
 
 export default function HomePage() {
   return (
-    <div>
-        <Header />
-        <MenuHeader />
-    </div>
+   <Layout>
+    Home page
+  </Layout>
   )
 }

@@ -47,7 +47,7 @@ exports.addCategory = (req, res) => {
   //creating category object
   const categoryObj = {
     name: req.body.name,
-    slug: `${slugify(req.body.name)}-${shortid.generate()}`,
+    slug: `${slugify(req.body.name)}`,
   };
 
   //saving category image to the backend

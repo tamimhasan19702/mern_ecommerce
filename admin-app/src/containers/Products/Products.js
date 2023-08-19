@@ -53,7 +53,7 @@ export default function Products(props) {
    */
   const handleClose = () => {
     // Create a new FormData object to store the form data.
-    const form = new FormData();
+     const form = new FormData();
 
     // Append the name, quantity, price, description, and category to the form data.
     form.append("name", name);
@@ -77,9 +77,7 @@ export default function Products(props) {
   /**
    * Sets the show state to true.
    */
-  const handleShow = () => {
-    setShow(true);
-  };
+  const handleShow = () => setShow(true);
 
   /**
    * Recursively creates a list of categories and their IDs and names.
@@ -321,7 +319,7 @@ export default function Products(props) {
           <Col md={12}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h3>Products</h3>
-              <button onClick={handleShow}>Add</button>
+              <button variant="primary" onClick={handleShow}>Add</button>
             </div>
           </Col>
         </Row>
