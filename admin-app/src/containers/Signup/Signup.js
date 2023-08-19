@@ -21,7 +21,6 @@ const Signup = (props) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   //taking out value from the redux store
   const auth = useSelector((state) => state.auth);
   const user = useSelector((state) => state.user);
