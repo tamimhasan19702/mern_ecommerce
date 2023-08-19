@@ -31,8 +31,6 @@ export default function MenuHeader() {
             category.parentId ? <a href={category.slug}>{category.name}</a> : 
             <span>{category.name}</span>
            }
-
-          {category.name}
           {/* if category has children, recursively render the children */}
           {category.children.length > 0 ? (
             <ul>{renderCategories(category.children)}</ul>
