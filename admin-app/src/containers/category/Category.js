@@ -8,7 +8,7 @@
  */
 
 import React, { useState } from "react";
-import {  Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addCategory } from "../../actions";
 import Layout from "../../components/Layout/Layout";
@@ -24,7 +24,6 @@ export default function Category() {
   const [categoryName, setCategoryName] = useState("");
   const [parentCategoryId, setParentCategoryId] = useState("");
   const [categoryImage, setCategoryImage] = useState("");
-  const [formData, setFormData] = useState({});
 
   //rendering the categories in the frontend with this function
   const renderCategories = (categories) => {
@@ -48,9 +47,7 @@ export default function Category() {
   };
 
   //using this to show the category frontend when the modal form is done submitting
-  const handleShow = () => {
-    setShow(true);
-  };
+  const handleShow = () => setShow(true);
 
   //using is to open the modal form
   const handleClose = () => {
@@ -67,7 +64,6 @@ export default function Category() {
     dispatch(addCategory(form));
 
     setShow(false);
-    setFormData({});
   };
 
   //creating new category list with it
@@ -100,7 +96,7 @@ export default function Category() {
           <Col md={12}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h3>Category</h3>
-              <button onClick={handleShow}>Add</button>
+              <button variant="primary" onClick={handleShow}>Add</button>
             </div>
           </Col>
         </Row>

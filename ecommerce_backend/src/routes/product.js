@@ -34,6 +34,8 @@ router.post(
   createProduct
 );
 
+router.get("/product/:slug", getProductsBySlug);
+
 router.post(
   "/product/getProducts",
   requireSignin,
