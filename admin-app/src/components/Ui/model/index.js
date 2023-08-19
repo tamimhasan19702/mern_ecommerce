@@ -24,7 +24,7 @@ function NewModal(props) {
   
     <Modal.Footer>
       {/* handleClose function finally submits everything in the backend and closes the modal popup */}
-      <Button variant="primary" onClick={props.handleClose}>
+      <Button variant="primary" onClick={props.handleClose} type="submit">
         Save Changes
       </Button>
     </Modal.Footer>
