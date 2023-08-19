@@ -15,7 +15,7 @@ import { categoryConstants } from "./constants";
 export const getAllCategory = () => {
   return async (dispatch) => {
     //dispatching getting all category constants request
-    dispatch({ type: categoryConstants.GET_All_CATEGORIES_REQUEST });
+    dispatch({ type: categoryConstants.GET_ALL_CATEGORIES_REQUEST });
 
     //getting response from the server with this route
     const res = await axios.get(`category/getcategory`);
