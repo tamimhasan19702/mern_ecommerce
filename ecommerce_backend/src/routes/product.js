@@ -34,7 +34,7 @@ router.post(
   createProduct
 );
 
-router.get("/product/:slug", getProductBySlug);
+router.get("/products/:slug", getProductBySlug);
 
 router.post(
   "/product/getProducts",
