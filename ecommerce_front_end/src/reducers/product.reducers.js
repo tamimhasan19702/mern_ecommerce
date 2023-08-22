@@ -30,9 +30,6 @@ export default (state = initState, action) => {
         productsByPrice: { ...action.payload.productsByPrice },
       };
       break;
-    case productConstants.GET_PRODUCT_BY_SLUG_FAILURE:
-      state = {};
-      break;
   }
   return state;
 };
