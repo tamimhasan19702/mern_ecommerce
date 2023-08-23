@@ -62,30 +62,24 @@ exports.getProducts = async (req, res) => {
 //getting product by slug
 
 exports.getProductBySlug = async (req, res) => {
-  try {
-    const { slug } = req.params;
-    const category = await Category.findOne({ slug: slug }).select("_id").exec();
+  const { slug } = req.params;
+  const category = await Category.findOne({ slug }).select("_id").exec();
 
-    if (category) {
-      const products = await Product.find({ category: category._id }).exec();
+  if (category) {
+    const products = await Product.find({ category: category._id }).exec();
 
-      if (products.length > 0) {
-        res.status(200).json({
-          products,
-          productsByPrice: {
-            under5k: products.filter((product) => product.price < 5000),
-            under10k: products.filter((product) => product.price < 10000),
-            under20k: products.filter((product) => product.price < 20000),
-            under30k: products.filter((product) => product.price < 30000),
-            under50k: products.filter((product) => product.price < 50000),
-          },
-        });
-      }
+    if (products.length > 0) {
+      const productsByPrice = {
+        under5k: products.filter((product) => product.price < 5000),
+        under10k: products.filter((product) => product.price < 10000),
+        under20k: products.filter((product) => product.price < 20000),
+        under30k: products.filter((product) => product.price < 30000),
+        under50k: products.filter((product) => product.price < 50000),
+      };
+
+      return res.status(200).json({ products, productsByPrice });
     }
-
-    res.status(200).json({ category });
-  } catch (error) {
-    res.status(400).json({ error });
   }
-};
 
+  return res.status(200).json({ category });
+};

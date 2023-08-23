@@ -6,17 +6,12 @@ import { getProductBySlug } from "../../actions";
 import Layout from "../../Components/Layout";
 
 export default function ProductListPage(props) {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(props.match.params.slug)
-    dispatch(getProductBySlug())
-  }, [])
+    const { match } = props;
+    dispatch(getProductBySlug(match.params.slug));
+  }, []);
 
-  return( 
-  <Layout>
-    product list page
-  </Layout>
-  )
+  return <Layout>product list page</Layout>;
 }
