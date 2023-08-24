@@ -7,8 +7,7 @@
 
 const express = require("express");
 const { requireSignin, adminMiddleware } = require("../common-middlewires");
-const { createProduct, getProducts } = require("../controller/product");
-const { getProductsBySlug } = require("../controller/product");
+const { createProduct, getProducts, getProductBySlug } = require("../controller/product");
 
 const multer = require("multer");
 const router = express.Router();
@@ -35,7 +34,7 @@ router.post(
   createProduct
 );
 
-router.get("/product/:slug", getProductsBySlug);
+router.get("/products/:slug", getProductBySlug);
 
 router.post(
   "/product/getProducts",
