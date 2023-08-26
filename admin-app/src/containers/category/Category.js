@@ -14,6 +14,9 @@ import { addCategory } from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Ui/input/Input";
 import NewModal from "../../components/Ui/model";
+import CheckboxTree from 'react-checkbox-tree';
+import 'react-checkbox-tree/lib/react-checkbox-tree.css';
+import {BiPlusCircle,BiMinusCircle, BiArrowToBottom, Bi} from 'react-icons/bi'
 
 export default function Category() {
   //taking category value fron the state
@@ -24,6 +27,9 @@ export default function Category() {
   const [categoryName, setCategoryName] = useState("");
   const [parentCategoryId, setParentCategoryId] = useState("");
   const [categoryImage, setCategoryImage] = useState("");
+  const [checked, setChecked] = useState([]);
+  const [expanded, setExpanded] = useState([]);
+
 
   //rendering the categories in the frontend with this function
   const renderCategories = (categories) => {
@@ -32,14 +38,11 @@ export default function Category() {
     for (let category of categories) {
       //pushing new category element in the blank myCategories array
       myCategories.push(
-        //creating a list item and rendering category items and adding category name as the key
-        <li key={category.name}>
-          {category.name}
-          {/* if category children exist then recall this function for it's children */}
-          {category.children.length > 0 ? (
-            <ul>{renderCategories(category.children)}</ul>
-          ) : null}
-        </li>
+        {
+         label: category.name,
+         value: category._id,
+         children: category.children.length > 0 &&  renderCategories(category.children),
+        }
       );
     }
 
@@ -103,8 +106,21 @@ export default function Category() {
         {/* redering the categories to the frontend */}
         <Row>
           <Col md={12}>
-            {/* calling this renderCategory function with the category as argument we got from the redux store*/}
-            <ul>{renderCategories(category.categories)}</ul>
+            {/* calling this renderCategory function with the category as argument we got from the redux store
+            <ul>{renderCategories(category.categories)}</ul> */}
+          
+          <CheckboxTree 
+          nodes={renderCategories(category.categories)}
+          checked={checked}
+          expanded={expanded}
+          onCheck={checked => setChecked(checked)}
+          onExpand={expanded => setExpanded(expanded)}
+          icons={{
+            check: <BiPlusCircle/>,
+            uncheck: <BiMinusCircle/>
+          }}
+          />
+          
           </Col>
         </Row>
       </Container>

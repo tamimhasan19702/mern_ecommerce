@@ -6,7 +6,7 @@
 
 /** @format */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductBySlug } from "../../actions";
 import Layout from "../../Components/Layout";
@@ -16,6 +16,13 @@ import { generatePublicUrl } from "../../urlConfig";
 export default function ProductListPage(props) {
   const product = useSelector((state) => state.product);
   const dispatch = useDispatch();
+  const [priceRange, setPriceRange] = useState({
+    under5k: 5000,
+    under10k: 10000,
+    under20k: 20000,
+    under30k: 30000,
+    under50k: 50000,
+  });
 
   useEffect(() => {
     const { match } = props;
@@ -28,7 +35,7 @@ export default function ProductListPage(props) {
         return (
           <div className="card">
             <div className="cardHeader">
-              <div>{props.match.params.slug} mobile under 10K</div>
+              <div>{props.match.params.slug} mobile under {priceRange[key]}</div>
               <button>View all</button>
             </div>
 
