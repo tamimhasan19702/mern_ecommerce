@@ -14,9 +14,21 @@ import { addCategory } from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Ui/input/Input";
 import NewModal from "../../components/Ui/model";
-import CheckboxTree from 'react-checkbox-tree';
-import 'react-checkbox-tree/lib/react-checkbox-tree.css';
-import {BiPlusCircle,BiMinusCircle, BiArrowToBottom, Bi} from 'react-icons/bi'
+import CheckboxTree from "react-checkbox-tree";
+import "react-checkbox-tree/lib/react-checkbox-tree.css";
+import {
+  BiPlusCircle,
+  BiMinusCircle,
+  BiDockLeft,
+  BiDockRight,
+} from "react-icons/bi";
+import {
+  IoIosCheckbox,
+  IoIosCheckboxOutline,
+  IoIosArrowForward,
+  IoIosArrowDown,
+  IoIosAddCircleOutline,
+} from "react-icons/io";
 
 export default function Category() {
   //taking category value fron the state
@@ -29,6 +41,9 @@ export default function Category() {
   const [categoryImage, setCategoryImage] = useState("");
   const [checked, setChecked] = useState([]);
   const [expanded, setExpanded] = useState([]);
+  const [checkedArray, setCheckedArray] = useState([]);
+  const [expandedArray, setExpandedArray] = useState([]);
+  const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
 
 
   //rendering the categories in the frontend with this function
@@ -37,13 +52,12 @@ export default function Category() {
     let myCategories = [];
     for (let category of categories) {
       //pushing new category element in the blank myCategories array
-      myCategories.push(
-        {
-         label: category.name,
-         value: category._id,
-         children: category.children.length > 0 &&  renderCategories(category.children),
-        }
-      );
+      myCategories.push({
+        label: category.name,
+        value: category._id,
+        children:
+          category.children.length > 0 && renderCategories(category.children),
+      });
     }
 
     return myCategories;
@@ -95,11 +109,14 @@ export default function Category() {
     <Layout sidebar>
       {/* category container */}
       <Container>
+
         <Row>
           <Col md={12}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h3>Category</h3>
-              <button variant="primary" onClick={handleShow}>Add</button>
+              <button variant="primary" onClick={handleShow}>
+                Add
+              </button>
             </div>
           </Col>
         </Row>
@@ -108,21 +125,31 @@ export default function Category() {
           <Col md={12}>
             {/* calling this renderCategory function with the category as argument we got from the redux store
             <ul>{renderCategories(category.categories)}</ul> */}
-          
-          <CheckboxTree 
-          nodes={renderCategories(category.categories)}
-          checked={checked}
-          expanded={expanded}
-          onCheck={checked => setChecked(checked)}
-          onExpand={expanded => setExpanded(expanded)}
-          icons={{
-            check: <BiPlusCircle/>,
-            uncheck: <BiMinusCircle/>
-          }}
-          />
-          
+
+            <CheckboxTree
+              nodes={renderCategories(category.categories)}
+              checked={checked}
+              expanded={expanded}
+              onCheck={(checked) => setChecked(checked)}
+              onExpand={(expanded) => setExpanded(expanded)}
+              icons={{
+                check: <IoIosCheckbox />,
+                uncheck: <IoIosCheckboxOutline />,
+                halfCheck: <IoIosAddCircleOutline />,
+                expandClose: <IoIosArrowForward />,
+                expandOpen: <IoIosArrowDown />,
+              }}
+            />
           </Col>
         </Row>
+
+        <Row>
+          <Col>
+          <button>Delete</button>
+          <button>Edit</button>
+          </Col>
+        </Row>
+          
       </Container>
 
       {/* category input modal item */}
@@ -162,6 +189,45 @@ export default function Category() {
           onChange={handleCategoryImage}
         />
       </NewModal>
+
+      {/* Edit Category */}
+
+      <NewModal
+        show={updateCategoryModal}
+        handleClose={updateCategory}
+        ModalTitle={"Add New Category"}>
+        <Input
+          value={categoryName}
+          placeholder={`Category Name`}
+          onChange={(e) => setCategoryName(e.target.value)}
+        />
+
+        <select
+          className="form-control"
+          style={{ marginTop: "20px" }}
+          value={parentCategoryId}
+          onChange={(e) => setParentCategoryId(e.target.value)}>
+          <option>select category</option>
+
+          {/* providing categories in the creteCategory function which retruns a option array */}
+          {createCategoryList(category.categories).map((option) => (
+            //mapping through the option array and inserting each all the array's name value
+            <option key={option.value} value={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select>
+
+        {/* taking category handling image with this input */}
+        <input
+          className="form-control"
+          style={{ marginTop: "20px" }}
+          type="file"
+          name="categoryImage"
+          onChange={handleCategoryImage}
+        />
+      </NewModal>
+
     </Layout>
   );
 }
