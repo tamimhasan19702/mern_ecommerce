@@ -17,12 +17,6 @@ import NewModal from "../../components/Ui/model";
 import CheckboxTree from "react-checkbox-tree";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import {
-  BiPlusCircle,
-  BiMinusCircle,
-  BiDockLeft,
-  BiDockRight,
-} from "react-icons/bi";
-import {
   IoIosCheckbox,
   IoIosCheckboxOutline,
   IoIosArrowForward,
@@ -44,7 +38,6 @@ export default function Category() {
   const [checkedArray, setCheckedArray] = useState([]);
   const [expandedArray, setExpandedArray] = useState([]);
   const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
-
 
   //rendering the categories in the frontend with this function
   const renderCategories = (categories) => {
@@ -104,12 +97,16 @@ export default function Category() {
     setCategoryImage(e.target.files[0]);
   };
 
+  const updateCategory = () => {
+    setUpdateCategoryModal(true);
+    
+  };
+
   return (
     //importing the default layout with the sidebar prop
     <Layout sidebar>
       {/* category container */}
       <Container>
-
         <Row>
           <Col md={12}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -145,11 +142,10 @@ export default function Category() {
 
         <Row>
           <Col>
-          <button>Delete</button>
-          <button>Edit</button>
+            <button>Delete</button>
+            <button onClick={() => updateCategory()}>Edit</button>
           </Col>
         </Row>
-          
       </Container>
 
       {/* category input modal item */}
@@ -194,29 +190,55 @@ export default function Category() {
 
       <NewModal
         show={updateCategoryModal}
-        handleClose={updateCategory}
-        ModalTitle={"Add New Category"}>
-        <Input
-          value={categoryName}
-          placeholder={`Category Name`}
-          onChange={(e) => setCategoryName(e.target.value)}
-        />
+        handleClose={() => setUpdateCategoryModal(true)}
+        ModalTitle={"Update Category"}
+        size="lg">
 
-        <select
-          className="form-control"
-          style={{ marginTop: "20px" }}
-          value={parentCategoryId}
-          onChange={(e) => setParentCategoryId(e.target.value)}>
-          <option>select category</option>
+        <Row>
+          <Col>
+            <h6>Expanded</h6>
+          </Col>
+        </Row>
 
-          {/* providing categories in the creteCategory function which retruns a option array */}
-          {createCategoryList(category.categories).map((option) => (
-            //mapping through the option array and inserting each all the array's name value
-            <option key={option.value} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </select>
+        <Row>
+          {/* category name */}
+          <Col>
+            <Input
+              value={categoryName}
+              placeholder={`Category Name`}
+              onChange={(e) => setCategoryName(e.target.value)}
+            />
+          </Col>
+
+          {/* selecting the categories */}
+          <Col>
+            <select
+              className="form-control"
+              value={parentCategoryId}
+              onChange={(e) => setParentCategoryId(e.target.value)}>
+              <option>select category</option>
+
+              {/* providing categories in the creteCategory function which retruns a option array */}
+              {createCategoryList(category.categories).map((option) => (
+                //mapping through the option array and inserting each all the array's name value
+                <option key={option.value} value={option.value}>
+                  {option.name}
+                </option>
+              ))}
+            </select>
+          </Col>
+
+          {/* category informations */}
+
+          <Col>
+            <select className="form-control">
+              <option value="">Select Type</option>
+              <option value="store">Store</option>
+              <option value="product">Product</option>
+              <option value="page">page</option>
+            </select>
+          </Col>
+        </Row>
 
         {/* taking category handling image with this input */}
         <input
@@ -227,7 +249,6 @@ export default function Category() {
           onChange={handleCategoryImage}
         />
       </NewModal>
-
     </Layout>
   );
 }
