@@ -81,7 +81,11 @@ export default function Category() {
     //creating a empty option array as argument
     for (let category of categories) {
       //pushing category id and name in the option array
-      options.push({ value: category._id, name: category.name, parentId: category.parentId });
+      options.push({
+        value: category._id,
+        name: category.name,
+        parentId: category.parentId,
+      });
       //if category children exist then doing the same thing for them
       if (category.children.length > 0) {
         createCategoryList(category.children, options);
@@ -100,7 +104,21 @@ export default function Category() {
   const updateCategory = () => {
     setUpdateCategoryModal(true);
     const categories = createCategoryList(category.categories);
-    console.log({checked, expanded, categories})
+    const checkedArray = [];
+    const expandedArray = [];
+
+    checked.length > 0 &&
+      checked.forEach((categoryId, index) => {
+        const category = categories.find((category, _index) => categoryId === category.value);
+        category && checkedArray.push(category);
+      });
+
+    expanded.length > 0 && expanded.forEach((categoryId, index) => {
+      const category = categories.find((category, _index) => categoryId === category.value);
+      category && expandedArray.push(category);
+    })  
+
+    console.log({ checked, expanded, categories });
   };
 
   return (
@@ -194,7 +212,6 @@ export default function Category() {
         handleClose={() => setUpdateCategoryModal(true)}
         ModalTitle={"Update Category"}
         size="lg">
-
         <Row>
           <Col>
             <h6>Expanded</h6>
@@ -241,7 +258,7 @@ export default function Category() {
           </Col>
         </Row>
 
-        <Row style={{marginTop: "20px"}}>
+        <Row style={{ marginTop: "20px" }}>
           {/* category name */}
           <Col>
             <Input
@@ -289,9 +306,7 @@ export default function Category() {
           name="categoryImage"
           onChange={handleCategoryImage}
         />
-
       </NewModal>
-
     </Layout>
   );
 }
