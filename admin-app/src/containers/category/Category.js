@@ -81,7 +81,7 @@ export default function Category() {
     //creating a empty option array as argument
     for (let category of categories) {
       //pushing category id and name in the option array
-      options.push({ value: category._id, name: category.name });
+      options.push({ value: category._id, name: category.name, parentId: category.parentId });
       //if category children exist then doing the same thing for them
       if (category.children.length > 0) {
         createCategoryList(category.children, options);
@@ -99,7 +99,8 @@ export default function Category() {
 
   const updateCategory = () => {
     setUpdateCategoryModal(true);
-    
+    const categories = createCategoryList(category.categories);
+    console.log({checked, expanded, categories})
   };
 
   return (
@@ -240,6 +241,46 @@ export default function Category() {
           </Col>
         </Row>
 
+        <Row style={{marginTop: "20px"}}>
+          {/* category name */}
+          <Col>
+            <Input
+              value={categoryName}
+              placeholder={`Category Name`}
+              onChange={(e) => setCategoryName(e.target.value)}
+            />
+          </Col>
+
+          {/* selecting the categories */}
+          <Col>
+            <select
+              className="form-control"
+              value={parentCategoryId}
+              onChange={(e) => setParentCategoryId(e.target.value)}>
+              <option>select category</option>
+
+              {/* providing categories in the creteCategory function which retruns a option array */}
+              {createCategoryList(category.categories).map((option) => (
+                //mapping through the option array and inserting each all the array's name value
+                <option key={option.value} value={option.value}>
+                  {option.name}
+                </option>
+              ))}
+            </select>
+          </Col>
+
+          {/* category informations */}
+
+          <Col>
+            <select className="form-control">
+              <option value="">Select Type</option>
+              <option value="store">Store</option>
+              <option value="product">Product</option>
+              <option value="page">page</option>
+            </select>
+          </Col>
+        </Row>
+
         {/* taking category handling image with this input */}
         <input
           className="form-control"
@@ -248,7 +289,9 @@ export default function Category() {
           name="categoryImage"
           onChange={handleCategoryImage}
         />
+
       </NewModal>
+
     </Layout>
   );
 }
