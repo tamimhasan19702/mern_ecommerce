@@ -109,16 +109,23 @@ export default function Category() {
 
     checked.length > 0 &&
       checked.forEach((categoryId, index) => {
-        const category = categories.find((category, _index) => categoryId === category.value);
+        const category = categories.find(
+          (category, _index) => categoryId === category.value
+        );
         category && checkedArray.push(category);
       });
 
-    expanded.length > 0 && expanded.forEach((categoryId, index) => {
-      const category = categories.find((category, _index) => categoryId === category.value);
-      category && expandedArray.push(category);
-    })  
+    expanded.length > 0 &&
+      expanded.forEach((categoryId, index) => {
+        const category = categories.find(
+          (category, _index) => categoryId === category.value
+        );
+        category && expandedArray.push(category);
+      });
+    setCheckedArray(checkedArray);
+    setExpandedArray(expandedArray);
 
-    console.log({ checked, expanded, categories });
+    console.log({ checked, expanded, categories, checkedArray, expandedArray });
   };
 
   return (
@@ -218,85 +225,47 @@ export default function Category() {
           </Col>
         </Row>
 
-        <Row>
-          {/* category name */}
-          <Col>
-            <Input
-              value={categoryName}
-              placeholder={`Category Name`}
-              onChange={(e) => setCategoryName(e.target.value)}
-            />
-          </Col>
+        {expandedArray.length > 0 &&
+          expandedArray.map((item, index) => (
+            <Row key={index}>
+              {/* category name */}
+              <Col>
+                <Input
+                  value={item.name}
+                  placeholder={`Category Name`}
+                  onChange={(e) => setCategoryName(index, e.target.value)}
+                />
+              </Col>
 
-          {/* selecting the categories */}
-          <Col>
-            <select
-              className="form-control"
-              value={parentCategoryId}
-              onChange={(e) => setParentCategoryId(e.target.value)}>
-              <option>select category</option>
+              {/* selecting the categories */}
+              <Col>
+                <select
+                  className="form-control"
+                  value={item.parentId}
+                  onChange={(e) => setParentCategoryId(index, e.target.value)}>
+                  <option>select category</option>
 
-              {/* providing categories in the creteCategory function which retruns a option array */}
-              {createCategoryList(category.categories).map((option) => (
-                //mapping through the option array and inserting each all the array's name value
-                <option key={option.value} value={option.value}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
-          </Col>
+                  {/* providing categories in the createCategoryList function which returns an option array */}
+                  {createCategoryList(category.categories).map((option) => (
+                    // mapping through the option array and inserting each of the array's name value
+                    <option key={option.value} value={option.value}>
+                      {option.name}
+                    </option>
+                  ))}
+                </select>
+              </Col>
 
-          {/* category informations */}
-
-          <Col>
-            <select className="form-control">
-              <option value="">Select Type</option>
-              <option value="store">Store</option>
-              <option value="product">Product</option>
-              <option value="page">page</option>
-            </select>
-          </Col>
-        </Row>
-
-        <Row style={{ marginTop: "20px" }}>
-          {/* category name */}
-          <Col>
-            <Input
-              value={categoryName}
-              placeholder={`Category Name`}
-              onChange={(e) => setCategoryName(e.target.value)}
-            />
-          </Col>
-
-          {/* selecting the categories */}
-          <Col>
-            <select
-              className="form-control"
-              value={parentCategoryId}
-              onChange={(e) => setParentCategoryId(e.target.value)}>
-              <option>select category</option>
-
-              {/* providing categories in the creteCategory function which retruns a option array */}
-              {createCategoryList(category.categories).map((option) => (
-                //mapping through the option array and inserting each all the array's name value
-                <option key={option.value} value={option.value}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
-          </Col>
-
-          {/* category informations */}
-
-          <Col>
-            <select className="form-control">
-              <option value="">Select Type</option>
-              <option value="store">Store</option>
-              <option value="product">Product</option>
-              <option value="page">page</option>
-            </select>
-          </Col>
-        </Row>
+              {/* category information */}
+              <Col>
+                <select className="form-control">
+                  <option value="">Select Type</option>
+                  <option value="store">Store</option>
+                  <option value="product">Product</option>
+                  <option value="page">page</option>
+                </select>
+              </Col>
+            </Row>
+          ))}
 
         {/* taking category handling image with this input */}
         <input
