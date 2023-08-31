@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /**
  * * title: Category component
  * * description: this component is to show all the product categories in the front end
@@ -128,6 +129,17 @@ export default function Category() {
     console.log({ checked, expanded, categories, checkedArray, expandedArray });
   };
 
+
+  const handleCategoryInput = (key, value, index, type) => {
+    if(type == "checked"){
+      const updatedCheckedArray = checkedArray.map((item, _index) => index == _index ? {...item, [key]: value} : item );
+      setCheckedArray(updatedCheckedArray);
+    }else if(type == "expanded"){
+      const updatedExpandedArray = expandedArray.map((item, _index) => index == _index ? {...item, [key]: value} : item );
+      setExpandedArray(updatedExpandedArray);
+    }
+  }
+
   return (
     //importing the default layout with the sidebar prop
     <Layout sidebar>
@@ -227,13 +239,13 @@ export default function Category() {
 
         {expandedArray.length > 0 &&
           expandedArray.map((item, index) => (
-            <Row key={index}>
+            <Row key={index} style={{marginTop: "20px"}}>
               {/* category name */}
               <Col>
                 <Input
                   value={item.name}
                   placeholder={`Category Name`}
-                  onChange={(e) => setCategoryName(index, e.target.value)}
+                  onChange={(e) => handleCategoryInput('name', e.target.value, index, 'checked')}
                 />
               </Col>
 
@@ -242,7 +254,7 @@ export default function Category() {
                 <select
                   className="form-control"
                   value={item.parentId}
-                  onChange={(e) => setParentCategoryId(index, e.target.value)}>
+                  onChange={(e) => handleCategoryInput('parentId', e.target.value, index, 'checked')}>
                   <option>select category</option>
 
                   {/* providing categories in the createCategoryList function which returns an option array */}
