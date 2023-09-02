@@ -1,3 +1,10 @@
+/* eslint-disable eqeqeq */
+/**
+ * eslint-disable eqeqeq
+ *
+ * @format
+ */
+
 /**
  * * title: Category component
  * * description: this component is to show all the product categories in the front end
@@ -81,7 +88,11 @@ export default function Category() {
     //creating a empty option array as argument
     for (let category of categories) {
       //pushing category id and name in the option array
-      options.push({ value: category._id, name: category.name });
+      options.push({
+        value: category._id,
+        name: category.name,
+        parentId: category.parentId,
+      });
       //if category children exist then doing the same thing for them
       if (category.children.length > 0) {
         createCategoryList(category.children, options);
@@ -99,7 +110,43 @@ export default function Category() {
 
   const updateCategory = () => {
     setUpdateCategoryModal(true);
-    
+    const categories = createCategoryList(category.categories);
+    const checkedArray = [];
+    const expandedArray = [];
+
+    checked.length > 0 &&
+      checked.forEach((categoryId, index) => {
+        const category = categories.find(
+          (category, _index) => categoryId === category.value
+        );
+        category && checkedArray.push(category);
+      });
+
+    expanded.length > 0 &&
+      expanded.forEach((categoryId, index) => {
+        const category = categories.find(
+          (category, _index) => categoryId === category.value
+        );
+        category && expandedArray.push(category);
+      });
+    setCheckedArray(checkedArray);
+    setExpandedArray(expandedArray);
+
+    console.log({ checked, expanded, categories, checkedArray, expandedArray });
+  };
+
+  const handleCategoryInput = (key, value, index, type) => {
+    if (type == "checked") {
+      const updatedCheckedArray = checkedArray.map((item, _index) =>
+        index == _index ? { ...item, [key]: value } : item
+      );
+      setCheckedArray(updatedCheckedArray);
+    } else if (type == "expanded") {
+      const updatedExpandedArray = expandedArray.map((item, _index) =>
+        index == _index ? { ...item, [key]: value } : item
+      );
+      setExpandedArray(updatedExpandedArray);
+    }
   };
 
   return (
@@ -190,64 +237,133 @@ export default function Category() {
 
       <NewModal
         show={updateCategoryModal}
-        handleClose={() => setUpdateCategoryModal(true)}
+        handleClose={() => setUpdateCategoryModal(false)}
         ModalTitle={"Update Category"}
-        size="lg">
+        size="lg"
+        onSUb
+        >
 
         <Row>
           <Col>
-            <h6>Expanded</h6>
+            <h3>Expanded Elements</h3>
           </Col>
         </Row>
 
-        <Row>
-          {/* category name */}
-          <Col>
-            <Input
-              value={categoryName}
-              placeholder={`Category Name`}
-              onChange={(e) => setCategoryName(e.target.value)}
-            />
-          </Col>
+        {expandedArray.length > 0 &&
+          expandedArray.map((item, index) => (
+            <Row key={index} style={{ marginTop: "20px" }}>
+              {/* category name */}
+              <Col>
+                <Input
+                  value={item.name}
+                  placeholder={`Category Name`}
+                  onChange={(e) =>
+                    handleCategoryInput(
+                      "name",
+                      e.target.value,
+                      index,
+                      "expanded"
+                    )
+                  }
+                />
+              </Col>
 
-          {/* selecting the categories */}
-          <Col>
-            <select
-              className="form-control"
-              value={parentCategoryId}
-              onChange={(e) => setParentCategoryId(e.target.value)}>
-              <option>select category</option>
+              {/* selecting the categories */}
+              <Col>
+                <select
+                  className="form-control"
+                  value={item.parentId}
+                  onChange={(e) =>
+                    handleCategoryInput(
+                      "parentId",
+                      e.target.value,
+                      index,
+                      "expanded"
+                    )
+                  }>
+                  <option>select category</option>
 
-              {/* providing categories in the creteCategory function which retruns a option array */}
-              {createCategoryList(category.categories).map((option) => (
-                //mapping through the option array and inserting each all the array's name value
-                <option key={option.value} value={option.value}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
-          </Col>
+                  {/* providing categories in the createCategoryList function which returns an option array */}
+                  {createCategoryList(category.categories).map((option) => (
+                    // mapping through the option array and inserting each of the array's name value
+                    <option key={option.value} value={option.value}>
+                      {option.name}
+                    </option>
+                  ))}
+                </select>
+              </Col>
 
-          {/* category informations */}
+              {/* category information */}
+              <Col>
+                <select className="form-control">
+                  <option value="">Select Type</option>
+                  <option value="store">Store</option>
+                  <option value="product">Product</option>
+                  <option value="page">page</option>
+                </select>
+              </Col>
+            </Row>
+          ))}
 
-          <Col>
-            <select className="form-control">
-              <option value="">Select Type</option>
-              <option value="store">Store</option>
-              <option value="product">Product</option>
-              <option value="page">page</option>
-            </select>
-          </Col>
-        </Row>
+        <h3>Checked Categories</h3> 
+        
+        {checkedArray.length > 0 &&
+          checkedArray.map((item, index) => (
+            <Row key={index} style={{ marginTop: "20px" }}>
+              {/* category name */}
+              <Col>
+                <Input
+                  value={item.name}
+                  placeholder={`Category Name`}
+                  onChange={(e) =>
+                    handleCategoryInput(
+                      "name",
+                      e.target.value,
+                      index,
+                      "checked"
+                    )
+                  }
+                />
+              </Col>
 
-        {/* taking category handling image with this input */}
-        <input
-          className="form-control"
-          style={{ marginTop: "20px" }}
-          type="file"
-          name="categoryImage"
-          onChange={handleCategoryImage}
-        />
+              {/* selecting the categories */}
+              <Col>
+                <select
+                  className="form-control"
+                  value={item.parentId}
+                  onChange={(e) =>
+                    handleCategoryInput(
+                      "parentId",
+                      e.target.value,
+                      index,
+                      "checked"
+                    )
+                  }>
+                  <option>select category</option>
+
+                  {/* providing categories in the createCategoryList function which returns an option array */}
+                  {createCategoryList(category.categories).map((option) => (
+                    // mapping through the option array and inserting each of the array's name value
+                    <option key={option.value} value={option.value}>
+                      {option.name}
+                    </option>
+                  ))}
+                </select>
+              </Col>
+
+              {/* category information */}
+              <Col>
+                <select className="form-control">
+                  <option value="">Select Type</option>
+                  <option value="store">Store</option>
+                  <option value="product">Product</option>
+                  <option value="page">page</option>
+                </select>
+              </Col>
+            </Row>
+          ))}
+
+    
       </NewModal>
     </Layout>
   );
