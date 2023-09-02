@@ -245,7 +245,7 @@ export default function Category() {
 
         <Row>
           <Col>
-            <h6>Expanded</h6>
+            <h3>Expanded Elements</h3>
           </Col>
         </Row>
 
@@ -305,7 +305,7 @@ export default function Category() {
             </Row>
           ))}
 
-        <h1>Checked Categories</h1> 
+        <h3>Checked Categories</h3> 
         
         {checkedArray.length > 0 &&
           checkedArray.map((item, index) => (
@@ -363,14 +363,7 @@ export default function Category() {
             </Row>
           ))}
 
-        {/* taking category handling image with this input */}
-        <input
-          className="form-control"
-          style={{ marginTop: "20px" }}
-          type="file"
-          name="categoryImage"
-          onChange={handleCategoryImage}
-        />
+    
       </NewModal>
     </Layout>
   );

@@ -9,7 +9,7 @@ const express = require("express");
 const router = express.Router();
 
 //inserting required controller functions
-const { addCategory, getCategories } = require("../controller/category");
+const { addCategory, getCategories, updateCategory } = require("../controller/category");
 //inserting all the common middlewires
 const { requireSignin, adminMiddleware } = require("../common-middlewires");
 //third party packages
@@ -33,5 +33,7 @@ const upload = multer({ storage });
 router.post("/category/create",requireSignin,adminMiddleware,upload.single("categoryImage"),addCategory);
 
 router.get("/category/getcategory", getCategories);
+
+router.post("/category/update",upload.array("categoryImage"),updateCategory);
 
 module.exports = router;

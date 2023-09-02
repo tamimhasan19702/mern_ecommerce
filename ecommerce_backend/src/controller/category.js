@@ -83,3 +83,27 @@ exports.getCategories = (req, res) => {
     }
   });
 };
+
+//updating category to the database
+exports.updateCategory = (req, res) => {
+  const { name, parentId, type } = req.body;
+  if (name instanceof Array) {
+    for (let i = 0; i < name.length; i++) {
+      const category = {
+        name: name[i],
+        type: type[i],
+      };
+      if(parentId !== ""){
+      caches.parentId = parentId[i];
+      }
+
+     const updatedCategory = Category.findOneAndUpdate({_id},category,{new:true});
+
+     
+    }
+  }
+
+  res.status(200).json({
+    body: req.body,
+  });
+};
