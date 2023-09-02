@@ -1,5 +1,11 @@
 /* eslint-disable eqeqeq */
 /**
+ * eslint-disable eqeqeq
+ *
+ * @format
+ */
+
+/**
  * * title: Category component
  * * description: this component is to show all the product categories in the front end
  * * author: Tareq Monower
@@ -129,16 +135,19 @@ export default function Category() {
     console.log({ checked, expanded, categories, checkedArray, expandedArray });
   };
 
-
   const handleCategoryInput = (key, value, index, type) => {
-    if(type == "checked"){
-      const updatedCheckedArray = checkedArray.map((item, _index) => index == _index ? {...item, [key]: value} : item );
+    if (type == "checked") {
+      const updatedCheckedArray = checkedArray.map((item, _index) =>
+        index == _index ? { ...item, [key]: value } : item
+      );
       setCheckedArray(updatedCheckedArray);
-    }else if(type == "expanded"){
-      const updatedExpandedArray = expandedArray.map((item, _index) => index == _index ? {...item, [key]: value} : item );
+    } else if (type == "expanded") {
+      const updatedExpandedArray = expandedArray.map((item, _index) =>
+        index == _index ? { ...item, [key]: value } : item
+      );
       setExpandedArray(updatedExpandedArray);
     }
-  }
+  };
 
   return (
     //importing the default layout with the sidebar prop
@@ -228,9 +237,12 @@ export default function Category() {
 
       <NewModal
         show={updateCategoryModal}
-        handleClose={() => setUpdateCategoryModal(true)}
+        handleClose={() => setUpdateCategoryModal(false)}
         ModalTitle={"Update Category"}
-        size="lg">
+        size="lg"
+        onSUb
+        >
+
         <Row>
           <Col>
             <h6>Expanded</h6>
@@ -239,13 +251,20 @@ export default function Category() {
 
         {expandedArray.length > 0 &&
           expandedArray.map((item, index) => (
-            <Row key={index} style={{marginTop: "20px"}}>
+            <Row key={index} style={{ marginTop: "20px" }}>
               {/* category name */}
               <Col>
                 <Input
                   value={item.name}
                   placeholder={`Category Name`}
-                  onChange={(e) => handleCategoryInput('name', e.target.value, index, 'checked')}
+                  onChange={(e) =>
+                    handleCategoryInput(
+                      "name",
+                      e.target.value,
+                      index,
+                      "expanded"
+                    )
+                  }
                 />
               </Col>
 
@@ -254,7 +273,72 @@ export default function Category() {
                 <select
                   className="form-control"
                   value={item.parentId}
-                  onChange={(e) => handleCategoryInput('parentId', e.target.value, index, 'checked')}>
+                  onChange={(e) =>
+                    handleCategoryInput(
+                      "parentId",
+                      e.target.value,
+                      index,
+                      "expanded"
+                    )
+                  }>
+                  <option>select category</option>
+
+                  {/* providing categories in the createCategoryList function which returns an option array */}
+                  {createCategoryList(category.categories).map((option) => (
+                    // mapping through the option array and inserting each of the array's name value
+                    <option key={option.value} value={option.value}>
+                      {option.name}
+                    </option>
+                  ))}
+                </select>
+              </Col>
+
+              {/* category information */}
+              <Col>
+                <select className="form-control">
+                  <option value="">Select Type</option>
+                  <option value="store">Store</option>
+                  <option value="product">Product</option>
+                  <option value="page">page</option>
+                </select>
+              </Col>
+            </Row>
+          ))}
+
+        <h1>Checked Categories</h1> 
+        
+        {checkedArray.length > 0 &&
+          checkedArray.map((item, index) => (
+            <Row key={index} style={{ marginTop: "20px" }}>
+              {/* category name */}
+              <Col>
+                <Input
+                  value={item.name}
+                  placeholder={`Category Name`}
+                  onChange={(e) =>
+                    handleCategoryInput(
+                      "name",
+                      e.target.value,
+                      index,
+                      "checked"
+                    )
+                  }
+                />
+              </Col>
+
+              {/* selecting the categories */}
+              <Col>
+                <select
+                  className="form-control"
+                  value={item.parentId}
+                  onChange={(e) =>
+                    handleCategoryInput(
+                      "parentId",
+                      e.target.value,
+                      index,
+                      "checked"
+                    )
+                  }>
                   <option>select category</option>
 
                   {/* providing categories in the createCategoryList function which returns an option array */}
