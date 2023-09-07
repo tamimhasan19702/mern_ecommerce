@@ -68,3 +68,25 @@ export const addCategory = (form) => {
     }
   };
 };
+
+
+// creating actions for adding category to the backend
+export const updateCategories = (form) => {
+  return async (dispatch) => {
+    //dispatching add new category request
+    dispatch({ type: categoryConstants. UPDATE_CATEGORIES_REQUEST});
+
+    try {
+      //post request with the axios with the form data as argument
+      const res = await axios.post(`/category/update`, form);
+
+      if (res.status === 201) {
+       console.log(res)
+      } else {
+        console.log(res)
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
