@@ -85,25 +85,40 @@ exports.getCategories = (req, res) => {
 };
 
 //updating category to the database
-exports.updateCategory = (req, res) => {
-  const { name, parentId, type } = req.body;
+exports.updateCategory = async  (req, res) => {
+  const { _id, name, parentId, type } = req.body;
+  const updatedCategories = [];
+
   if (name instanceof Array) {
     for (let i = 0; i < name.length; i++) {
       const category = {
         name: name[i],
         type: type[i],
       };
-      if(parentId !== ""){
-      caches.parentId = parentId[i];
+      if (parentId !== "") {
+        caches.parentId = parentId[i];
       }
 
-     const updatedCategory = Category.findOneAndUpdate({_id},category,{new:true});
-
-     
+      const updatedCategory = await Category.findOneAndUpdate({ _id }, category, {
+        new: true,
+      });
+      updatedCategories.push(updatedCategory);
+      return res.status(201).json({ updatedCategories });
     }
+
+  }else{
+    const category = {
+      name: name,
+      type: type,
+    }
+    if(parentId !== ""){
+      category.parentId = parentId;
+    }
+    const updatedCategory = await Category.findOneAndUpdate({ _id }, category, {
+      new: true
+    })
+    return res.status(201).json({ updatedCategory })
   }
 
-  res.status(200).json({
-    body: req.body,
-  });
+
 };
