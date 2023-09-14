@@ -170,6 +170,7 @@ export default function Category() {
   };
 
   const handleCategoryInput = (key, value, index, type) => {
+    console.log(value);
     if (type == "checked") {
       const updatedCheckedArray = checkedArray.map((item, _index) =>
         index == _index ? { ...item, [key]: value } : item
@@ -184,7 +185,25 @@ export default function Category() {
   };
 
   const updateCategoriesForm = () => {
-    setUpdateCategoryModal(false);
+    const form = new FormData();
+
+    expandedArray.forEach((item, index) => {
+      form.append("_id", item.value);
+      form.append("name", item.name);
+      form.append("parentId", item.parentId ? item.parentId : "");
+      form.append("type", item.type);
+    });
+    checkedArray.forEach((item, index) => {
+      form.append("_id", item.value);
+      form.append("name", item.name);
+      form.append("parentId", item.parentId ? item.parentId : "");
+      form.append("type", item.type);
+    });
+  };
+
+  const deleteCategory = () => {
+    updateCheckedAndExpandedCategories();
+    setDeleteCategoryModal(true);
   };
 
   const renderUpdateCategoriesModal = () => {
@@ -318,46 +337,6 @@ export default function Category() {
     );
   };
 
-  const renderAddCategoryModal = () => {
-    return (
-      <NewModal
-        show={show}
-        handleClose={handleClose}
-        ModalTitle={"Add New Category"}>
-        <Input
-          value={categoryName}
-          placeholder={`Category Name`}
-          onChange={(e) => setCategoryName(e.target.value)}
-        />
-
-        <select
-          className="form-control"
-          style={{ marginTop: "20px" }}
-          value={parentCategoryId}
-          onChange={(e) => setParentCategoryId(e.target.value)}>
-          <option>select category</option>
-
-          {/* providing categories in the creteCategory function which retruns a option array */}
-          {createCategoryList(category.categories).map((option) => (
-            //mapping through the option array and inserting each all the array's name value
-            <option key={option.value} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </select>
-
-        {/* taking category handling image with this input */}
-        <input
-          className="form-control"
-          style={{ marginTop: "20px" }}
-          type="file"
-          name="categoryImage"
-          onChange={handleCategoryImage}
-        />
-      </NewModal>
-    );
-  };
-
   return (
     //importing the default layout with the sidebar prop
     <Layout sidebar>
@@ -405,10 +384,10 @@ export default function Category() {
       </Container>
 
       {/* category input modal item */}
-      {renderAddCategoryModal()}
+      {/* {renderAddCategoryModal()} */}
 
       {/* Edit Category */}
-      {renderUpdateCategoriesModal()}
+      {/* {renderUpdateCategoriesModal()} */}
     </Layout>
   );
 }
