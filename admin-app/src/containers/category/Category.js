@@ -34,7 +34,7 @@
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addCategory } from "../../actions";
+import { addCategory, getAllCategory, updateCategories } from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Ui/input/Input";
 import NewModal from "../../components/Ui/model";
@@ -48,6 +48,7 @@ import {
   IoIosAddCircleOutline,
 } from "react-icons/io";
 import AddCategoryModal from "./components/AddCategoryModal";
+import UpdateCategoriesModal from "./components/UpdateCategoriesModal";
 
 export default function Category() {
   //taking category value fron the state
@@ -200,11 +201,8 @@ export default function Category() {
       form.append("parentId", item.parentId ? item.parentId : "");
       form.append("type", item.type);
     });
-  };
-
-  const deleteCategory = () => {
-    updateCheckedAndExpandedCategories();
-    setDeleteCategoryModal(true);
+    dispatch(updateCategories(form));
+    setUpdateCategoryModal(false);
   };
 
   return (
@@ -265,6 +263,19 @@ export default function Category() {
         setParentCategoryId={setParentCategoryId}
         // categoryList={categoryList}
         handleCategoryImage={handleCategoryImage}
+      />
+
+      {/* category update modal */}
+      <UpdateCategoriesModal
+        show={updateCategoryModal}
+        handleClose={() => setUpdateCategoryModal(false)}
+        onSubmit={updateCategoriesForm}
+        modalTitle={"Update Categories"}
+        size="lg"
+        expandedArray={expandedArray}
+        checkedArray={checkedArray}
+        handleCategoryInput={handleCategoryInput}
+        // categorylist={categoryList}
       />
     </Layout>
   );

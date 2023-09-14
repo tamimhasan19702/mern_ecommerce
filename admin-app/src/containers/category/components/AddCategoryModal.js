@@ -43,13 +43,13 @@ const AddCategoryModal = (props) => {
             <option>select category</option>
 
             {/* providing categories in the creteCategory function which retruns a option array */}
-            {categoryList.map((option) => {
+            {/* {categoryList.map((option) => {
               return (
                 <option key={option.value} value={option.value}>
                   {option.name}
                 </option>
               );
-            })}
+            })} */}
           </select>
         </Col>
 
