@@ -47,6 +47,7 @@ import {
   IoIosArrowDown,
   IoIosAddCircleOutline,
 } from "react-icons/io";
+import AddCategoryModal from "./components/AddCategoryModal";
 
 export default function Category() {
   //taking category value fron the state
@@ -206,137 +207,6 @@ export default function Category() {
     setDeleteCategoryModal(true);
   };
 
-  const renderUpdateCategoriesModal = () => {
-    return (
-      <NewModal
-        show={updateCategoryModal}
-        handleClose={updateCategoriesForm()}
-        ModalTitle={"Update Category"}
-        size="lg"
-        onSUb>
-        <Row>
-          <Col>
-            <h3>Expanded Elements</h3>
-          </Col>
-        </Row>
-
-        {expandedArray.length > 0 &&
-          expandedArray.map((item, index) => (
-            <Row key={index} style={{ marginTop: "20px" }}>
-              {/* category name */}
-              <Col>
-                <Input
-                  value={item.name}
-                  placeholder={`Category Name`}
-                  onChange={(e) =>
-                    handleCategoryInput(
-                      "name",
-                      e.target.value,
-                      index,
-                      "expanded"
-                    )
-                  }
-                />
-              </Col>
-
-              {/* selecting the categories */}
-              <Col>
-                <select
-                  className="form-control"
-                  value={item.parentId}
-                  onChange={(e) =>
-                    handleCategoryInput(
-                      "parentId",
-                      e.target.value,
-                      index,
-                      "expanded"
-                    )
-                  }>
-                  <option>select category</option>
-
-                  {/* providing categories in the createCategoryList function which returns an option array */}
-                  {createCategoryList(category.categories).map((option) => (
-                    // mapping through the option array and inserting each of the array's name value
-                    <option key={option.value} value={option.value}>
-                      {option.name}
-                    </option>
-                  ))}
-                </select>
-              </Col>
-
-              {/* category information */}
-              <Col>
-                <select className="form-control">
-                  <option value="">Select Type</option>
-                  <option value="store">Store</option>
-                  <option value="product">Product</option>
-                  <option value="page">page</option>
-                </select>
-              </Col>
-            </Row>
-          ))}
-
-        <h3>Checked Categories</h3>
-
-        {checkedArray.length > 0 &&
-          checkedArray.map((item, index) => (
-            <Row key={index} style={{ marginTop: "20px" }}>
-              {/* category name */}
-              <Col>
-                <Input
-                  value={item.name}
-                  placeholder={`Category Name`}
-                  onChange={(e) =>
-                    handleCategoryInput(
-                      "name",
-                      e.target.value,
-                      index,
-                      "checked"
-                    )
-                  }
-                />
-              </Col>
-
-              {/* selecting the categories */}
-              <Col>
-                <select
-                  className="form-control"
-                  value={item.parentId}
-                  onChange={(e) =>
-                    handleCategoryInput(
-                      "parentId",
-                      e.target.value,
-                      index,
-                      "checked"
-                    )
-                  }>
-                  <option>select category</option>
-
-                  {/* providing categories in the createCategoryList function which returns an option array */}
-                  {createCategoryList(category.categories).map((option) => (
-                    // mapping through the option array and inserting each of the array's name value
-                    <option key={option.value} value={option.value}>
-                      {option.name}
-                    </option>
-                  ))}
-                </select>
-              </Col>
-
-              {/* category information */}
-              <Col>
-                <select className="form-control">
-                  <option value="">Select Type</option>
-                  <option value="store">Store</option>
-                  <option value="product">Product</option>
-                  <option value="page">page</option>
-                </select>
-              </Col>
-            </Row>
-          ))}
-      </NewModal>
-    );
-  };
-
   return (
     //importing the default layout with the sidebar prop
     <Layout sidebar>
@@ -384,10 +254,18 @@ export default function Category() {
       </Container>
 
       {/* category input modal item */}
-      {/* {renderAddCategoryModal()} */}
-
-      {/* Edit Category */}
-      {/* {renderUpdateCategoriesModal()} */}
+      <AddCategoryModal
+        show={show}
+        handleClose={() => setShow(false)}
+        onSubmit={handleClose}
+        modalTitle={"Add New Category"}
+        categoryName={categoryName}
+        setCategoryName={setCategoryName}
+        parentCategoryId={parentCategoryId}
+        setParentCategoryId={setParentCategoryId}
+        // categoryList={categoryList}
+        handleCategoryImage={handleCategoryImage}
+      />
     </Layout>
   );
 }

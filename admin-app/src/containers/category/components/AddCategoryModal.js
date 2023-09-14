@@ -69,3 +69,5 @@ const AddCategoryModal = (props) => {
     </NewModal>
   );
 };
+
+export default AddCategoryModal;
