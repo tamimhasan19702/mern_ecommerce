@@ -1,4 +1,15 @@
-/* eslint-disable eqeqeq */
+/**
+ * eslint-disable eqeqeq
+ *
+ * @format
+ */
+
+/**
+ * eslint-disable eqeqeq
+ *
+ * @format
+ */
+
 /**
  * eslint-disable eqeqeq
  *
@@ -20,7 +31,7 @@
  * @format
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addCategory } from "../../actions";
@@ -40,17 +51,50 @@ import {
 export default function Category() {
   //taking category value fron the state
   const category = useSelector((state) => state.category);
-  const dispatch = useDispatch();
 
-  const [show, setShow] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [parentCategoryId, setParentCategoryId] = useState("");
   const [categoryImage, setCategoryImage] = useState("");
+  const [show, setShow] = useState(false);
   const [checked, setChecked] = useState([]);
   const [expanded, setExpanded] = useState([]);
   const [checkedArray, setCheckedArray] = useState([]);
   const [expandedArray, setExpandedArray] = useState([]);
   const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
+  const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!category.loading) {
+      setShow(false);
+    }
+  }, [category.loading]);
+
+  //using is to open the modal form
+  const handleClose = () => {
+    //creating a new form object with formData function
+    const form = new FormData();
+
+    if (categoryName === "") {
+      alert("Category name is required");
+      setShow(false);
+      return;
+    }
+
+    //appending the category name,parentId and categoryImage in the newly created form data
+    form.append("name", categoryName);
+    form.append("parentId", parentCategoryId);
+    form.append("categoryImage", categoryImage);
+    dispatch(addCategory(form));
+    setCategoryName("");
+    setParentCategoryId("");
+    //dispatching the addCategory action here
+
+    setShow(false);
+  };
+
+  //using this to show the category frontend when the modal form is done submitting
+  const handleShow = () => setShow(true);
 
   //rendering the categories in the frontend with this function
   const renderCategories = (categories) => {
@@ -69,26 +113,6 @@ export default function Category() {
     return myCategories;
   };
 
-  //using this to show the category frontend when the modal form is done submitting
-  const handleShow = () => setShow(true);
-
-  //using is to open the modal form
-  const handleClose = () => {
-    //creating a new form object with formData function
-    const form = new FormData();
-
-    //appending the category name,parentId and categoryImage in the newly created form data
-    form.append("name", categoryName);
-    form.append("parentId", parentCategoryId);
-    form.append("categoryImage", categoryImage);
-    setCategoryName("");
-    setParentCategoryId("");
-    //dispatching the addCategory action here
-    dispatch(addCategory(form));
-
-    setShow(false);
-  };
-
   //creating new category list with it
   const createCategoryList = (categories, options = []) => {
     //creating a empty option array as argument
@@ -98,6 +122,7 @@ export default function Category() {
         value: category._id,
         name: category.name,
         parentId: category.parentId,
+        type: category.type,
       });
       //if category children exist then doing the same thing for them
       if (category.children.length > 0) {
@@ -115,7 +140,11 @@ export default function Category() {
   };
 
   const updateCategory = () => {
+    updateCheckedAndExpandedCategories();
     setUpdateCategoryModal(true);
+  };
+
+  const updateCheckedAndExpandedCategories = () => {
     const categories = createCategoryList(category.categories);
     const checkedArray = [];
     const expandedArray = [];
@@ -123,7 +152,7 @@ export default function Category() {
     checked.length > 0 &&
       checked.forEach((categoryId, index) => {
         const category = categories.find(
-          (category, _index) => categoryId === category.value
+          (category, _index) => categoryId == category.value
         );
         category && checkedArray.push(category);
       });
@@ -131,14 +160,13 @@ export default function Category() {
     expanded.length > 0 &&
       expanded.forEach((categoryId, index) => {
         const category = categories.find(
-          (category, _index) => categoryId === category.value
+          (category, _index) => categoryId == category.value
         );
         category && expandedArray.push(category);
       });
+
     setCheckedArray(checkedArray);
     setExpandedArray(expandedArray);
-
-    console.log({ checked, expanded, categories, checkedArray, expandedArray });
   };
 
   const handleCategoryInput = (key, value, index, type) => {
@@ -157,7 +185,7 @@ export default function Category() {
 
   const updateCategoriesForm = () => {
     setUpdateCategoryModal(false);
-  }
+  };
 
   const renderUpdateCategoriesModal = () => {
     return (
@@ -381,7 +409,6 @@ export default function Category() {
 
       {/* Edit Category */}
       {renderUpdateCategoriesModal()}
-
     </Layout>
   );
 }
