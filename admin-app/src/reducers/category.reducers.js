@@ -87,34 +87,29 @@ const buildNewCategories = (parentId, categories, category) => {
   for (let cat of categories) {
     //if previous category element's id matches with the parentId then proceed this
     if (cat._id === parentId) {
+      const newCategory = {
+        _id: category._id,
+        name: category.name,
+        slug: category.slug,
+        parentId: category.parentId,
+        children: [],
+      };
+
       //pushing category element and also setting the children category
       myCategories.push({
         ...cat,
-        children: cat.children
-          ? buildNewCategories(
-              parentId,
-              [
-                ...cat.children,
-                {
-                  _id: category._id,
-                  name: category.name,
-                  slug: categories.slug,
-                  parentId: category.parentId,
-                  children: category.children,
-                },
-              ],
-              category
-            )
-          : [],
+        children:
+          cat.children.length > 0
+            ? [...cat.children, newCategory]
+            : [newCategory],
       });
     } else {
       // if category id doesn't match with the parentId then
       myCategories.push({
         ...cat,
-        children:
-          cat.children 
-            ? buildNewCategories(parentId, cat.children, category)
-            : [],
+        children: cat.children
+          ? buildNewCategories(parentId, cat.children, category)
+          : [],
       });
     }
   }

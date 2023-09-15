@@ -84,8 +84,7 @@ exports.getCategories = (req, res) => {
   });
 };
 
-//updating category to the database
-exports.updateCategory = async  (req, res) => {
+exports.updateCategories = async (req, res) => {
   const { _id, name, parentId, type } = req.body;
   const updatedCategories = [];
 
@@ -95,30 +94,35 @@ exports.updateCategory = async  (req, res) => {
         name: name[i],
         type: type[i],
       };
-      if (parentId !== "") {
-        caches.parentId = parentId[i];
+
+      if (parentId[i] !== "") {
+        category.parentId = parentId[i];
       }
 
-      const updatedCategory = await Category.findOneAndUpdate({ _id }, category, {
-        new: true,
-      });
+      const updatedCategory = await Category.findOneAndUpdate(
+        { _id: _id[i] },
+        category,
+        { new: true }
+      );
+
       updatedCategories.push(updatedCategory);
-      return res.status(201).json({ updatedCategories });
     }
 
-  }else{
+    return res.status(201).json({ updatedCategories: updatedCategories });
+  } else {
     const category = {
-      name: name,
-      type: type,
-    }
-    if(parentId !== ""){
+      name,
+      type,
+    };
+
+    if (parentId !== "") {
       category.parentId = parentId;
     }
+
     const updatedCategory = await Category.findOneAndUpdate({ _id }, category, {
-      new: true
-    })
-    return res.status(201).json({ updatedCategory })
+      new: true,
+    });
+
+    return res.status(201).json({ updatedCategory });
   }
-
-
 };

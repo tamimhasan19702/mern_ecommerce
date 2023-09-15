@@ -23,6 +23,12 @@
  */
 
 /**
+ * eslint-disable eqeqeq
+ *
+ * @format
+ */
+
+/**
  * * title: Category component
  * * description: this component is to show all the product categories in the front end
  * * author: Tareq Monower
@@ -201,7 +207,11 @@ export default function Category() {
       form.append("parentId", item.parentId ? item.parentId : "");
       form.append("type", item.type);
     });
-    dispatch(updateCategories(form));
+    dispatch(updateCategories(form)).then((result) => {
+      if (result) {
+        dispatch(getAllCategory());
+      }
+    });
     setUpdateCategoryModal(false);
   };
 
