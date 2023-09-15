@@ -9,14 +9,17 @@ const express = require("express");
 const router = express.Router();
 
 //inserting required controller functions
-const { addCategory, getCategories, updateCategory } = require("../controller/category");
+const {
+  addCategory,
+  getCategories,
+  updateCategories,
+} = require("../controller/category");
 //inserting all the common middlewires
 const { requireSignin, adminMiddleware } = require("../common-middlewires");
 //third party packages
 const multer = require("multer");
 const shortId = require("shortid");
 const path = require("path");
-
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -30,10 +33,20 @@ const storage = multer.diskStorage({
 //using multer package which will store files
 const upload = multer({ storage });
 
-router.post("/category/create",requireSignin,adminMiddleware,upload.single("categoryImage"),addCategory);
+router.post(
+  "/category/create",
+  requireSignin,
+  adminMiddleware,
+  upload.single("categoryImage"),
+  addCategory
+);
 
 router.get("/category/getcategory", getCategories);
 
-router.post("/category/update",upload.array("categoryImage"),updateCategory);
+router.post(
+  "/category/update",
+  upload.array("categoryImage"),
+  updateCategories
+);
 
 module.exports = router;
