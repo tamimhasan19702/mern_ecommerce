@@ -62,13 +62,14 @@ const UpdateCategoriesModal = (props) => {
                 }>
                 <option>select category</option>
 
-                {/* {categoryList.map((option) => {
+                {categoryList.map((option) => {
                   return (
                     <option key={option.value} value={option.value}>
                       {option.name}
                     </option>
                   );
-                })} */}
+                })}
+
               </select>
             </Col>
 
@@ -115,13 +116,14 @@ const UpdateCategoriesModal = (props) => {
                 }>
                 <option>select category</option>
 
-                {/* {categoryList.map((option) => {
+                {categoryList.map((option) => {
                   return (
                     <option key={option.value} value={option.value}>
                       {option.name}
                     </option>
                   );
-                })} */}
+                })}
+                
               </select>
             </Col>
 

@@ -81,7 +81,15 @@ export const updateCategories = (form) => {
 
       if (res.status === 201) {
         return true;
+        console.log(res);
+        // dispatch({ type: categoryConstants.UPDATE_CATEGORIES_SUCCESS });
+        // dispatch(getAllCategory());
       } else {
+        // const { error } = res.data;
+        // dispatch({
+        //   type: categoryConstants.UPDATE_CATEGORIES_FAILURE,
+        //   payload: { error },
+        // });
         console.log(res);
       }
     } catch (error) {

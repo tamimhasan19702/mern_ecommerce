@@ -5,30 +5,6 @@
  */
 
 /**
- * eslint-disable eqeqeq
- *
- * @format
- */
-
-/**
- * eslint-disable eqeqeq
- *
- * @format
- */
-
-/**
- * eslint-disable eqeqeq
- *
- * @format
- */
-
-/**
- * eslint-disable eqeqeq
- *
- * @format
- */
-
-/**
  * * title: Category component
  * * description: this component is to show all the product categories in the front end
  * * author: Tareq Monower
@@ -42,8 +18,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addCategory, getAllCategory, updateCategories } from "../../actions";
 import Layout from "../../components/Layout/Layout";
-import Input from "../../components/Ui/input/Input";
-import NewModal from "../../components/Ui/model";
 import CheckboxTree from "react-checkbox-tree";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import {
@@ -212,8 +186,11 @@ export default function Category() {
         dispatch(getAllCategory());
       }
     });
+
     setUpdateCategoryModal(false);
   };
+
+  const categoryList = createCategoryList(category.categories);
 
   return (
     //importing the default layout with the sidebar prop
@@ -271,7 +248,7 @@ export default function Category() {
         setCategoryName={setCategoryName}
         parentCategoryId={parentCategoryId}
         setParentCategoryId={setParentCategoryId}
-        // categoryList={categoryList}
+        categoryList={categoryList}
         handleCategoryImage={handleCategoryImage}
       />
 
@@ -285,7 +262,7 @@ export default function Category() {
         expandedArray={expandedArray}
         checkedArray={checkedArray}
         handleCategoryInput={handleCategoryInput}
-        // categorylist={categoryList}
+        categoryList={categoryList}
       />
     </Layout>
   );
