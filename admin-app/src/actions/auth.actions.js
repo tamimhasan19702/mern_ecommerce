@@ -11,43 +11,37 @@
 import { authConstants } from "./constants";
 import axios from "../helpers/axios";
 
-// auth login function for the user
 export const login = (user) => {
-
-  console.log(user)
-  // dispatching an login action
   return async (dispatch) => {
-    //dispatch takes an object with a type and payload for argument
-    dispatch({ type: authConstants.LOGIN_REQUEST });
+    try {
+      dispatch({ type: authConstants.LOGIN_REQUEST });
 
-    //doing a axios post request in the server
-    const res = await axios.post(`/admin/signin`, {
-      //destructuring the user object
-      ...user,
-    });
-
-    if (res.status === 200) {
-      const { token, user } = res.data;
-      //setting token and user in the localStorage
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-
-      //dispatching the login success action
-      dispatch({
-        type: authConstants.LOGIN_SUCCESS,
-        payload: {
-          token,
-          user,
-        },
+      const res = await axios.post(`/admin/signin`, {
+        ...user,
       });
-    } else {
-      if (res.status === 400) {
-        //if status 400 then dispatch login failure action
+
+      if (res.status === 200) {
+        const { token, user } = res.data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+
         dispatch({
-          type: authConstants.LOGIN_FAILURE,
-          payload: { error: res.data.error },
+          type: authConstants.LOGIN_SUCCESS,
+          payload: {
+            token,
+            user,
+          },
         });
+      } else {
+        if (res.status === 400) {
+          dispatch({
+            type: authConstants.LOGIN_FAILURE,
+            payload: { error: res.data.error },
+          });
+        }
       }
+    } catch (error) {
+      console.log(error);
     }
   };
 };
