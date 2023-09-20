@@ -188,12 +188,17 @@ export default function Category() {
           {
             label: "Yes",
             color: "danger",
-            onClick: () => {
-              alert("yes");
-            },
+            onClick: deleteCategories,
           },
         ]}>
-        Are you sure?
+        <h5>Expanded</h5>
+        {expandedArray.map((item, index) => (
+          <span key={index}>{item.name}</span>
+        ))}
+        <h5>Checked</h5>
+        {checkedArray.map((item, index) => (
+          <span key={index}>{item.name}</span>
+        ))}
       </NewModal>
     );
   };
@@ -201,6 +206,15 @@ export default function Category() {
   const deleteCategory = () => {
     updateCheckedAndExpandedCategories();
     setDeleteCategoryModal(true);
+  };
+
+  const deleteCategories = () => {
+    const checkedIdArray = checkedArray.map((item, index) => ({
+      _id: item.value,
+    }));
+    const expandedIdArray = expandedArray.map((item, index) => ({
+      _id: item.value,
+    }));
   };
 
   const categoryList = createCategoryList(category.categories);
