@@ -176,7 +176,23 @@ export default function Category() {
       <NewModal
         modalTitle="Confirm"
         show={deleteCategoryModal}
-        handleClose={() => setDeleteCategoryModal(false)}>
+        handleClose={() => setDeleteCategoryModal(false)}
+        buttons={[
+          {
+            label: "No",
+            color: "primary",
+            onClick: () => {
+              alert("No");
+            },
+          },
+          {
+            label: "Yes",
+            color: "danger",
+            onClick: () => {
+              alert("yes");
+            },
+          },
+        ]}>
         Are you sure?
       </NewModal>
     );
@@ -184,6 +200,7 @@ export default function Category() {
 
   const deleteCategory = () => {
     updateCheckedAndExpandedCategories();
+    setDeleteCategoryModal(true);
   };
 
   const categoryList = createCategoryList(category.categories);

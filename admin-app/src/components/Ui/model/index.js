@@ -20,11 +20,21 @@ function NewModal(props) {
       <Modal.Body>{props.children}</Modal.Body>
 
       <Modal.Footer>
-        {/* handleClose function finally submits everything in the backend and closes the modal popup */}
-
-        <Button variant="primary" onClick={props.handleClose} type="submit">
-          Save Changes
-        </Button>
+        {props.buttons ? (
+          props.buttons.map((btn, index) => (
+            <Button
+              variant={btn.color}
+              key={index}
+              onClick={btn.onClick}
+              type="submit">
+              {btn.label}
+            </Button>
+          ))
+        ) : (
+          <Button variant="primary" onClick={props.handleClose}>
+            Save Changes
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );
