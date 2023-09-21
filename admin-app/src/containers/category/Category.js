@@ -209,12 +209,14 @@ export default function Category() {
   };
 
   const deleteCategories = () => {
-    const checkedIdArray = checkedArray.map((item, index) => ({
+    const checkedIdsArray = checkedArray.map((item, index) => ({
       _id: item.value,
     }));
-    const expandedIdArray = expandedArray.map((item, index) => ({
+    const expandedIdsArray = expandedArray.map((item, index) => ({
       _id: item.value,
     }));
+    const idsArray = expandedIdsArray.concat(checkedIdsArray);
+    dispatch();
   };
 
   const categoryList = createCategoryList(category.categories);

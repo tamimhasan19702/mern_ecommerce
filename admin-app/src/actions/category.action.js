@@ -82,18 +82,29 @@ export const updateCategories = (form) => {
       if (res.status === 201) {
         return true;
         console.log(res);
-        // dispatch({ type: categoryConstants.UPDATE_CATEGORIES_SUCCESS });
-        // dispatch(getAllCategory());
+        dispatch({ type: categoryConstants.UPDATE_CATEGORIES_SUCCESS });
+        dispatch(getAllCategory());
       } else {
-        // const { error } = res.data;
-        // dispatch({
-        //   type: categoryConstants.UPDATE_CATEGORIES_FAILURE,
-        //   payload: { error },
-        // });
+        const { error } = res.data;
+        dispatch({
+          type: categoryConstants.UPDATE_CATEGORIES_FAILURE,
+          payload: { error },
+        });
         console.log(res);
       }
     } catch (error) {
       console.log(error.response);
     }
+  };
+};
+
+export const deleteCategories = (ids) => {
+  return async (dispatch) => {
+    const res = await axios.post("/category/delete", {
+      payload: {
+        ids,
+      },
+    });
+    console.log(res);
   };
 };
