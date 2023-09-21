@@ -13,6 +13,7 @@ const {
   addCategory,
   getCategories,
   updateCategories,
+  deleteCategories,
 } = require("../controller/category");
 //inserting all the common middlewires
 const { requireSignin, adminMiddleware } = require("../common-middlewires");
@@ -48,5 +49,7 @@ router.post(
   upload.array("categoryImage"),
   updateCategories
 );
+
+router.post("/category/delete", deleteCategories);
 
 module.exports = router;
