@@ -16,7 +16,12 @@
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addCategory, getAllCategory, updateCategories } from "../../actions";
+import {
+  addCategory,
+  getAllCategory,
+  updateCategories,
+  deleteCategories as deleteCategoriesAction,
+} from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import CheckboxTree from "react-checkbox-tree";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
@@ -217,6 +222,7 @@ export default function Category() {
     }));
     const idsArray = expandedIdsArray.concat(checkedIdsArray);
     dispatch();
+    dispatch(deleteCategoriesAction(idsArray));
   };
 
   const categoryList = createCategoryList(category.categories);
